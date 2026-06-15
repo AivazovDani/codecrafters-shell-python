@@ -22,8 +22,8 @@ def main():
 
             else:
 
-                if os.path.exists(command) and os.access(path, os.X_OK):
-                    print(os.path.abspath(command))
+                if os.path.exists(command) and os.access(command, os.X_OK):
+                    print(f'{command} is {os.path.abspath(command)}')
 
                 else:
                     print(f'{command}: not found')
