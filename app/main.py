@@ -29,7 +29,9 @@ def main():
                     print(f'{command}: not found')
 
         elif shutil.which(command):
-            args = command.split(" ")[1:]
+            path = command.split(" ")
+            args = path[1:]
+            command = path[:1]
             subprocess.run([command] + args)
 
         else:
