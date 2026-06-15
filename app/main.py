@@ -7,6 +7,7 @@ def main():
     while True:
         sys.stdout.write("$ ")
         command = input()
+        
 
         if command == 'exit':
             break
@@ -29,13 +30,15 @@ def main():
                     print(f'{command}: not found')
 
         else:
-            if shutil.which(command):
-                path = command.split(" ")
-                args = path[1:]
-                command = path[:1]
-                print(subprocess.run([command] + args))
+            parts = command.split()
+            cmd = parts[0]
+            args = parts[1:]
+            
+            path = shutil.which(cmd)
+            if path:
+                subprocess.run([path] + args)
             else:
-                print(f'{command}: command not found')
+                print(f'{cmd}: command not found')
 
 
 if __name__ == "__main__":
