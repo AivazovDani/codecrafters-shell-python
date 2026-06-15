@@ -1,7 +1,6 @@
 import sys
 import os
 import shutil
-import subprocess
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
@@ -24,16 +23,19 @@ def main():
             else:
 
                 if shutil.which(command): # checks if the file exists even outside my disk and the access status
-                    path = command.split(" ")
-                    args = path[1:]
-                    command = path[:1]
-                    print(subprocess.run([command] + args))
-                    
+                    print(f'{command} is {shutil.which(command)}')
+
                 else:
                     print(f'{command}: not found')
 
         else:
-            print(f'{command}: command not found')
+            if shutil.which(command):
+                path = command.split(" ")
+                args = path[1:]
+                command = path[:1]
+                print(subprocess.run([command] + args))
+            else:
+                print(f'{command}: command not found')
 
 
 if __name__ == "__main__":
