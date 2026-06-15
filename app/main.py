@@ -17,7 +17,7 @@ def main():
         elif command.startswith("type"):
             command = command.replace('type ','')
 
-            if command.startswith('echo') or command.startswith('exit'):
+            if command == 'echo' or command == 'exit':
                 print(f'{command} is a shell builtin')
 
             else:
