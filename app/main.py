@@ -22,8 +22,8 @@ def main():
 
             else:
 
-                if shutil.which(command):
-                    print(f'{command} is {os.path.abspath(command)}')
+                if shutil.which(command): # checks if the file exists even outside my disk and the access status
+                    print(f'{command} is {shutil.which(command)}')
 
                 else:
                     print(f'{command}: not found')
