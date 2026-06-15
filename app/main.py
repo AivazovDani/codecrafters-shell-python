@@ -12,7 +12,7 @@ def main():
             print(command.replace("echo ", ""))
         elif command.startswith("type"):
             command.replace('type ','')
-            if command.startswith('echo', 'type', 'exit'):
+            if command.startswith('echo') or command.startswith('type') or command.startswith('exit'):
                 print(f'{command} is a shell builtin')
             else:
                 print(f'{command}: not found')
