@@ -23,16 +23,13 @@ def main():
             else:
 
                 if shutil.which(command): # checks if the file exists even outside my disk and the access status
-                    print(f'{command} is {shutil.which(command)}')
-
+                    path = command.split(" ")
+                    args = path[1:]
+                    command = path[:1]
+                    subprocess.run([command] + args)
+                    
                 else:
                     print(f'{command}: not found')
-
-        elif shutil.which(command):
-            path = command.split(" ")
-            args = path[1:]
-            command = path[:1]
-            subprocess.run([command] + args)
 
         else:
             print(f'{command}: command not found')
