@@ -22,7 +22,7 @@ def main():
 
             else:
 
-                if shutil.which(command) and os.access(command, os.X_OK):
+                if shutil.which(command):
                     print(f'{command} is {os.path.abspath(command)}')
 
                 else:
