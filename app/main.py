@@ -1,6 +1,6 @@
 import sys
 import os
-
+import shutil
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
@@ -22,7 +22,7 @@ def main():
 
             else:
 
-                if os.path.exists(command) and os.access(command, os.X_OK):
+                if shutil.which(command) and os.access(command, os.X_OK):
                     print(f'{command} is {os.path.abspath(command)}')
 
                 else:
