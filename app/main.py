@@ -1,6 +1,7 @@
 import sys
 import os
 import shutil
+import subprocess
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
@@ -26,7 +27,7 @@ def main():
                     path = command.split(" ")
                     args = path[1:]
                     command = path[:1]
-                    subprocess.run([command] + args)
+                    print(subprocess.run([command] + args))
                     
                 else:
                     print(f'{command}: not found')
