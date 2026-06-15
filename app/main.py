@@ -37,7 +37,7 @@ def main():
             
             path = shutil.which(cmd)
             if path:
-                subprocess.run([path] + args)
+                subprocess.run([cmd] + args)
             else:
                 print(f'{cmd}: command not found')
 
