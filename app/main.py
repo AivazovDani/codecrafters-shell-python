@@ -18,13 +18,14 @@ def main():
 
         elif command.startswith("type"):
             command = command.replace('type ','')
+            cmd = command.split()[:1]
 
             if command == 'echo' or command == 'exit' or command == 'type':
                 print(f'{command} is a shell builtin')
 
             else:
 
-                if shutil.which(command): # checks if the file exists even outside my disk and the access status
+                if shutil.which(cmd): # checks if the file exists even outside my disk and the access status
                     print(f'{command} is {shutil.which(command)}')
 
                 else:
