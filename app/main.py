@@ -6,12 +6,14 @@ def main():
     while True:
         sys.stdout.write("$ ")
         command = input()
-        if command == 'exit':
-            break
-        elif command.startswith("echo"):
-            print(command.replace("echo ", ""))
+        # if command == 'exit':
+        #     break
+        # elif command.startswith("echo"):
+        #     print(command.replace("echo ", ""))
+        if command.startswith("echo", "exit", "type"):
+            print(f'{command} is a shell builtin')
         else:
-            print(f'{command}: command not found')
+            print(f'{command}: not found')
 
 
 if __name__ == "__main__":
