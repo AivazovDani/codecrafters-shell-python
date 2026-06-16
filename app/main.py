@@ -15,7 +15,7 @@ def completer(text, state):
             options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
 
             # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
-            for directory in os.environ.get('PATH').split(":"):
+            for directory in os.environ.get('PATH','').split(":"):
                 # loops through every file in directory
                 for file in os.listdir(directory):
                     # does the file starts with what the user typed
