@@ -55,12 +55,12 @@ def main():
         
         elif '>' in command:
             parts = command.split(">")
-            cmd_content = cmd[1]
+            cmd_content = parts[1]
 
             command_parts = parts[0]
             
 
-            with open(file, 'w') as f:
+            with open(cmd_content.strip(), 'w') as f:
                 subprocess([command_parts], stdout=f)
                 
 
