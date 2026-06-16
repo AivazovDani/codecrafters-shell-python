@@ -56,8 +56,8 @@ def main():
         elif '>' in command:
             if '1>' in command:
                 command = command.replace("1>", ">")
-                
-            parts = command.split(">") or command.split(">")
+
+            parts = command.split(">")
             cmd_content = parts[1]
 
             command_parts = shlex.split(parts[0].strip())
