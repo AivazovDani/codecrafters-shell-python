@@ -33,8 +33,8 @@ def main():
                 
         elif command.startswith("echo"):
             statment = command[5:]
-            statment = " ".join(statment)
-            print(statment.strip(''))
+            statment = "".join(statment)
+            print(statment.strip("'"))
 
         elif command.startswith("type"):
             command = command.replace('type ','')
