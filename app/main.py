@@ -13,7 +13,7 @@ def main():
         if command == 'exit':
             break
 
-        elif command == 'pwd':
+        elif command.startswith('pwd'):
 
             print(os.getcwd())
 
@@ -23,7 +23,7 @@ def main():
         elif command.startswith("type"):
             command = command.replace('type ','')
 
-            if command == 'echo' or command == 'exit' or command == 'type':
+            if command == 'echo' or command == 'exit' or command == 'type' or command == 'pwd':
                 print(f'{command} is a shell builtin')
 
             else:
