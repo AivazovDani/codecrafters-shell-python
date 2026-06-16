@@ -34,7 +34,7 @@ def completer(text, state):
 
 readline.set_completer_delims('')  # don't split on any special characters
 readline.set_completer(completer) # register your tab completion function
-readline.parse_and_bind("tab: complete") # bind tab key to completion
+readline.parse_and_bind("tab: menu-complete") # bind tab key to completion
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
