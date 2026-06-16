@@ -17,6 +17,16 @@ def main():
         if command == 'exit':
             break
 
+        elif '2>>' in command:
+            parts = command.split("2>>")
+
+            file = parts[1]
+
+            command_parts = shlex.split(parts[0])
+
+            with open(file.strip(), 'a') as f:
+                subprocess.run(command_parts, stderr=f)
+
         elif '>>' in command or '1>>' in command:
             command = command.replace("1>>", ">>")
             parts = command.split(">>")
