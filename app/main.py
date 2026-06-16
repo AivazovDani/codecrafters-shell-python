@@ -26,7 +26,7 @@ def main():
                 os.chdir(absolute_path) # change current directory to the new one
             
             elif absolute_path == '~':
-                os.chdir(os.path.expanduser(path)) # expand ~ to /home/yordan-ayvazov
+                os.chdir(os.path.expanduser(absolute_path)) # expand ~ to /home/yordan-ayvazov
 
             else:
                 print(f'cd: {absolute_path}: No such file or directory')
