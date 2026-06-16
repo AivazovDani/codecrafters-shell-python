@@ -2,7 +2,7 @@ import sys
 import os
 import shutil
 import subprocess
-import shlex # splitting '', "" and spaces
+import shlex # splitting '', "", /, _ and spaces. Everything
 
 
 
@@ -22,13 +22,23 @@ def main():
 
             parts = command.split(">")
 
-            cmd_content = parts[1]
+            file = parts[1]
 
             command_parts = shlex.split(parts[0])
             
 
-            with open(cmd_content.strip(), 'w') as f:
+            with open(file.strip(), 'w') as f:
                 subprocess.run(command_parts, stdout=f)
+        
+        elif '2>' in command:
+
+            parts = command.split("2>")
+            file = parts[1]
+
+            command_parts = shlex.split(parts[0])
+
+            with open(file.strip(), 'w') as f:
+                subprocess.run(command_parts, stderr=f)
 
         elif command.startswith('pwd'):
 
