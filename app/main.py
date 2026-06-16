@@ -53,9 +53,8 @@ def main():
                 else:
                     print(f'{command}: not found')
         
-        elif '>' in command:
-            if '1>' in command:
-                command = command.replace("1>", ">")
+        elif '>' in command or '1>' in command:
+            command = command.replace("1>", ">")
 
             parts = command.split(">")
 
