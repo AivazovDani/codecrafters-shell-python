@@ -37,7 +37,7 @@ def main():
                 
         elif command.startswith("echo"):
             statment = shlex.split(command[5:])
-            statment = "".join(statment)
+            statment = " ".join(statment)
             print(statment)
 
         elif command.startswith("type"):
