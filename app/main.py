@@ -13,19 +13,22 @@ def main():
         if command == 'exit':
             break
 
+        elif command == 'pwd':
+
+            print(os.getcwd())
+
         elif command.startswith("echo"):
             print(command.replace("echo ", ""))
 
         elif command.startswith("type"):
             command = command.replace('type ','')
-            cmd = command.split()[:1]
 
             if command == 'echo' or command == 'exit' or command == 'type':
                 print(f'{command} is a shell builtin')
 
             else:
 
-                if shutil.which(cmd): # checks if the file exists even outside my disk and the access status
+                if shutil.which(command): # checks if the file exists even outside my disk and the access status | shutil.which(cat)
                     print(f'{command} is {shutil.which(command)}')
 
                 else:
@@ -38,7 +41,7 @@ def main():
             
             path = shutil.which(cmd)
             if path:
-                subprocess.run([cmd] + args)
+                subprocess.run([cmd] + args) # finds the command (bin/cat) and executes it with the arguments (main.py) | subprocess
             else:
                 print(f'{cmd}: command not found')
 
