@@ -54,7 +54,10 @@ def main():
                     print(f'{command}: not found')
         
         elif '>' in command:
-            parts = command.split(">")
+            if '1>' in command:
+                command = command.replace("1>", ">")
+                
+            parts = command.split(">") or command.split(">")
             cmd_content = parts[1]
 
             command_parts = shlex.split(parts[0].strip())
