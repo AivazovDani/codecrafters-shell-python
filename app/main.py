@@ -15,8 +15,19 @@ def main():
 
         elif command.startswith('pwd'):
 
-            print(os.getcwd())
+            print(os.getcwd()) # get the absolute path of the current directory to standout
 
+        elif command.startswith('cd'):
+            parts = command.split()
+            cmd = parts[0]
+            absolute_path = parts[1]
+
+            if os.path.exists(absolute_path): # check if the file or directory exists
+                os.chdir(absolute_path) # change current directory to the new one
+
+            else:
+                print(f'cd: {absolute_path}: No such file or directory')
+                
         elif command.startswith("echo"):
             print(command.replace("echo ", ""))
 
