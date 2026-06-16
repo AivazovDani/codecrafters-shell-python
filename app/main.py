@@ -12,7 +12,7 @@ def completer(text, state):
             options = []
 
             # check builtins
-            options += [cmd for cmd in builtin if cms.startswith(text)]
+            options += [cmd for cmd in builtins if cmd.startswith(text)]
 
             # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
             for directory in os.environ.get('PATH').split(":"):
