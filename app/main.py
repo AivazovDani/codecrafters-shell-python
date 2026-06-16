@@ -32,8 +32,9 @@ def main():
                 print(f'cd: {absolute_path}: No such file or directory')
                 
         elif command.startswith("echo"):
-            statment = command[5:].strip('')
-            print(statment)
+            statment = command[5:]
+            statment = " ".join(statment)
+            print(statment.strip(''))
 
         elif command.startswith("type"):
             command = command.replace('type ','')
