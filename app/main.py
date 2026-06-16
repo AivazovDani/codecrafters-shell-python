@@ -59,12 +59,9 @@ def main():
 
             command_parts = parts[0]
             
-            cmd = shlex.split(cmd)
-            new_cmd = cmd[0]
-            cmd_content = cmd[1]
 
             with open(file, 'w') as f:
-                subprocess([new_cmd, cmd_content], stdout=f)
+                subprocess([command_parts], stdout=f)
                 
 
         else:
