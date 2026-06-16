@@ -22,8 +22,11 @@ def main():
             cmd = parts[0]
             absolute_path = parts[1]
 
-            if os.path.exists(absolute_path): # check if the file or directory exists
+            if os.path.exists(absolute_path): # check if the file or directory exists. Works for relative, absolute paths of directories and files
                 os.chdir(absolute_path) # change current directory to the new one
+            
+            elif absolute_path == '~':
+                os.chdir(os.path.expanduser(path)) # expand ~ to /home/yordan-ayvazov
 
             else:
                 print(f'cd: {absolute_path}: No such file or directory')
