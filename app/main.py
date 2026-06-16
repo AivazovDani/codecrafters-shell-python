@@ -36,9 +36,9 @@ def main():
                 print(f'cd: {absolute_path}: No such file or directory')
                 
         elif command.startswith("echo"):
-            statment = shlex.split(command[5:])
-            statment = " ".join(statment)
-            print(statment)
+            command = command[5:]
+            parts = shlex.split(command)
+            print(parts)
 
         elif command.startswith("type"):
             command = command.replace('type ','')
