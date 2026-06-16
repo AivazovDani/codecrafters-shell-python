@@ -12,7 +12,7 @@ def completer(text, state):
             options = []
 
             # check builtins
-            options += [cmd for cmd in builtins if cmd.startswith(text)]
+            options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
 
             # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
             for directory in os.environ.get('PATH').split(":"):
@@ -24,7 +24,7 @@ def completer(text, state):
                         full_path = os.path.join(directory, file)
                         # check if the file is executable | ––x permissions
                         if os.access(full_path, os.X_OK):
-                            options.append(file)
+                            options.append(file + ' ')
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
             if state < len(options):
