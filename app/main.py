@@ -2,6 +2,10 @@ import sys
 import os
 import shutil
 import subprocess
+import shlex # splitting '', "" and spaces
+
+
+
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
@@ -32,9 +36,9 @@ def main():
                 print(f'cd: {absolute_path}: No such file or directory')
                 
         elif command.startswith("echo"):
-            statment = command[5:]
-            statment = "".join(statment).split()
-            print(statment.strip("'"))
+            statment = shlex.split(command[5:])
+            statment = "".join(statment)
+            print(statment)
 
         elif command.startswith("type"):
             command = command.replace('type ','')
