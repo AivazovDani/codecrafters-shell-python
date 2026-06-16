@@ -17,6 +17,19 @@ def main():
         if command == 'exit':
             break
 
+        elif '>' in command or '1>' in command:
+            command = command.replace("1>", ">")
+
+            parts = command.split(">")
+
+            cmd_content = parts[1]
+
+            command_parts = shlex.split(parts[0])
+            
+
+            with open(cmd_content.strip(), 'w') as f:
+                subprocess.run(command_parts, stdout=f)
+
         elif command.startswith('pwd'):
 
             print(os.getcwd()) # get the absolute path of the current directory to standout
@@ -52,19 +65,6 @@ def main():
 
                 else:
                     print(f'{command}: not found')
-        
-        elif '>' in command or '1>' in command:
-            command = command.replace("1>", ">")
-
-            parts = command.split(">")
-
-            cmd_content = parts[1]
-
-            command_parts = shlex.split(parts[0])
-            
-
-            with open(cmd_content.strip(), 'w') as f:
-                subprocess.run(command_parts, stdout=f)
                 
 
         else:
