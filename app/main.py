@@ -57,11 +57,11 @@ def main():
             parts = command.split(">")
             cmd_content = parts[1]
 
-            command_parts = parts[0]
+            command_parts = shlex.split(parts[0].strip())
             
 
             with open(cmd_content.strip(), 'w') as f:
-                subprocess([command_parts], stdout=f)
+                subprocess.run(command_parts, stdout=f)
                 
 
         else:
