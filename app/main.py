@@ -58,9 +58,12 @@ def main():
                 command = command.replace("1>", ">")
 
             parts = command.split(">")
+            print(parts)
             cmd_content = parts[1]
+            print(cmd_content)
 
             command_parts = shlex.split(parts[0].strip())
+            print(command_parts)
             
 
             with open(cmd_content.strip(), 'w') as f:
