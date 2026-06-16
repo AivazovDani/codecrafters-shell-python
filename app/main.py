@@ -52,6 +52,20 @@ def main():
 
                 else:
                     print(f'{command}: not found')
+        
+        elif '>' in command:
+            parts = command.split(">")
+            cmd_content = cmd[1]
+
+            command_parts = parts[0]
+            
+            cmd = shlex.split(cmd)
+            new_cmd = cmd[0]
+            cmd_content = cmd[1]
+
+            with open(file, 'w') as f:
+                subprocess([new_cmd, cmd_content], stdout=f)
+                
 
         else:
             parts = shlex.split(command)
