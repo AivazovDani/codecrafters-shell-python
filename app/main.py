@@ -17,6 +17,16 @@ def main():
         if command == 'exit':
             break
 
+        elif '2>' in command:
+
+            parts = command.split("2>")
+            file = parts[1]
+
+            command_parts = shlex.split(parts[0])
+
+            with open(file.strip(), 'w') as f:
+                subprocess.run(command_parts, stderr=f)
+
         elif '>' in command or '1>' in command:
             command = command.replace("1>", ">")
 
@@ -29,16 +39,6 @@ def main():
 
             with open(file.strip(), 'w') as f:
                 subprocess.run(command_parts, stdout=f)
-        
-        elif '2>' in command:
-
-            parts = command.split("2>")
-            file = parts[1]
-
-            command_parts = shlex.split(parts[0])
-
-            with open(file.strip(), 'w') as f:
-                subprocess.run(command_parts, stderr=f)
 
         elif command.startswith('pwd'):
 
