@@ -54,7 +54,7 @@ def main():
                     print(f'{command}: not found')
 
         else:
-            parts = command.split()
+            parts = shlex.split(command)
             cmd = parts[0]
             args = parts[1:]
             
