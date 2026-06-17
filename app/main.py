@@ -29,7 +29,7 @@ def completer(text, state):
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
             
-            if len(options) == 1:
+            if len(options) == 1 and state == 0:
                 return options[state]
 
             if len(options) > 1:
