@@ -50,7 +50,7 @@ def completer(text, state):
             
             return None
             
-
+readline.set_completer_delims('')  # don't split on any characters
 readline.set_completer(completer) # register your tab completion function
 readline.parse_and_bind("tab: complete") # bind tab key to completion
 
