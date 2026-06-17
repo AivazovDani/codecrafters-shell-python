@@ -30,7 +30,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                options = glob.glob(text + '*')
+                options = [f + " " for f in os.listdir(".") if f.startswith(text)]
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
