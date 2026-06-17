@@ -5,26 +5,22 @@ import subprocess
 import shlex # splitting '', "", /, _ and spaces. Everything
 import readline # library that adds arrow keys up down like a real shell and remembers history of commands
 
+# Handeling TAB completion for build in commands and PATH executables
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
+autocomplete = builtins.copy()
+
+# checking for executables in each directory in PATH (directories in linux where executable programs are stored)
+for directory in os.environ.get('PATH', '').split(":"):
+    if os.path.exists(directory)
+    dir_list = os.listdir(directory)
+    autocomplete += dir_list
 
 def completer(text, state):
             # all commands the user would type
             options = []
 
             # check builtins
-            options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
-
-            # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
-            for directory in os.environ.get('PATH', '').split(":"):
-                    # loops through every file in directory
-                    for file in os.listdir(directory):
-                        # does the file starts with what the user typed
-                        if file.startswith(text):
-                            # construct the file
-                            full_path = os.path.join(directory, file)
-                            # check if the file is executable | ––x permissions
-                            if os.access(full_path, os.X_OK):
-                                options.append(file + ' ')
+            options += [cmd + ' ' for cmd in autocomplete if cmd.startswith(text)]
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
             if state < len(options):
