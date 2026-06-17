@@ -21,14 +21,14 @@ def completer(text, state):
                     # loops through every file in directory
                     dir_list = os.listdir(directory)
                     autocomplete += dir_list
-                    for file in os.listdir(directory):
-                        # does the file starts with what the user typed
-                        if file.startswith(text):
-                            # construct the file
-                            full_path = os.path.join(directory, file)
-                            # check if the file is executable | ––x permissions
-                            if os.access(full_path, os.X_OK):
-                                options.append(file + ' ')
+                    # for file in os.listdir(directory):
+                    #     # does the file starts with what the user typed
+                    #     if file.startswith(text):
+                    #         # construct the file
+                    #         full_path = os.path.join(directory, file)
+                    #         # check if the file is executable | ––x permissions
+                    #         if os.access(full_path, os.X_OK):
+                    #             options.append(file + ' ')
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
             if state < len(options):
