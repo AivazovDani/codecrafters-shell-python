@@ -15,22 +15,22 @@ def completer(text, state): # built in eadline but overriding it to fit my case
             options = []
             # check builtins
 
-            if ' ' not in command: # if we have space means the command is typed and we're waiting for args
+            if ' ' not in readline.get_line_buffer(): # if we have space means the command is typed and we're waiting for args
                 options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
+
+                # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
+                
+                if len(options) == 0: # if we don\t have any PATH executable in our list with commands
+                    # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
+
+                    for directory in os.environ.get('PATH', '').split(":"):
+                        if os.path.exists(directory):
+                            options += [f + ' ' for f in os.listdir(directory) if f.startswith(text)] # checking for all the commands that match our stdin
+                        
+                    options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
                 options = [f + " " for f in os.listdir(".") if f.startswith(text)]
-            
-            # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
-                
-            if len(options) == 0: # if we don\t have any PATH executable in our list with commands
-                # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
-
-                for directory in os.environ.get('PATH', '').split(":"):
-                    if os.path.exists(directory):
-                        options += [f + ' ' for f in os.listdir(directory) if f.startswith(text)] # checking for all the commands that match our stdin
-                        
-                options = sorted(options) # sorting alfabetically | worst case O(log n)
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
