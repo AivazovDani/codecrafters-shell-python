@@ -5,14 +5,14 @@ import subprocess
 import shlex # splitting '', "", /, _ and spaces. Everything
 import readline # library that adds arrow keys up down like a real shell and remembers history of commands
 
-# builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
+builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
 
-# def completer(text, state):
-#             # all commands the user would type
-#             options = []
+def completer(text, state):
+            # all commands the user would type
+            options = []
 
-#             # check builtins
-#             options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
+            # check builtins
+            options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
 
 #             # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
 #             for directory in os.environ.get('PATH','').split(":"):
@@ -26,21 +26,15 @@ import readline # library that adds arrow keys up down like a real shell and rem
 #                         if os.access(full_path, os.X_OK):
 #                             options.append(file + ' ')
             
-#             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
-#             if state < len(options):
-#                 return options[state]
-#             return None
+            # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
+            if state < len(options):
+                return options[state]
+            return None
 
 
-# readline.set_completer(completer) # register your tab completion function
-# readline.parse_and_bind("tab: complete") # bind tab key to completion
+readline.set_completer(completer) # register your tab completion function
+readline.parse_and_bind("tab: complete") # bind tab key to completion
 
-BUILTINS = {"echo", "exit", "type", "pwd", "cd"}
-
-readline.set_completer(
-    lambda t, s: ([c + " " for c in BUILTINS if c.startswith(t)] + [None])[s]
-)
-readline.parse_and_bind("tab: complete")
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
