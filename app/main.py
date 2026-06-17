@@ -7,52 +7,42 @@ import readline # library that adds arrow keys up down like a real shell and rem
 
 # Handeling TAB completion for build in commands and PATH executables
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
-autocomplete = builtins.copy()
-
-# checking for executables in each directory in PATH (directories in linux where executable programs are stored)
-for directory in os.environ.get('PATH', '').split(":"):
-    if os.path.exists(directory):
-        dir_list = os.listdir(directory)
-        autocomplete += dir_list
-
-autocomplete = sorted(autocomplete)
-bell_rung = False
 
 def completer(text, state):
-
-            global bell_rung
-            # all commands the user would type
             options = []
-
             # check builtins
-            options += [cmd + ' ' for cmd in autocomplete if cmd.startswith(text)]
+            options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
             
-            if len(options) == 1 and state == 0:
-                bell_rung = False
-                return options[state]
+            if len(options) == 0:
+                # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
+                for directory in os.environ.get('PATH', '').split(":"):
+                    if os.path.exists(directory):
+                        options += [f for f in os.listdir(directory) if f.startswith(text)]
+                
+                options = sorted(options)
 
-            if len(options) > 1:
-                if not bell_rung and state == 0:
-                    sys.stdout.write('\x07')
-                    sys.stdout.flush() # forces python to immediatly write to the terminal
-                    bell_rung = True
-                    return None
-                elif bell_rung and state == 0:
-                    sys.stdout.write('\n')
-                    sys.stdout.write('  '.join(o for o in options))
-                    sys.stdout.write('\n$ ')
-                    sys.stdout.write(readline.get_line_buffer())
-                    sys.stdout.flush()
-                    bell_rung = False
-                    return None # tells readline there are no more commands
+
+            if len(options) == 1 and state == 0:
+                return options[0] + " "
+
+                return None
+
+            return options[state] if state < len(options) else None
+
+
             
-            return None
-            
+def display_matches(substitution, options, longest_match_len):
+    print()
+    print("  ".join(sorted(options)))
+
+    sys.stdout.write("$ " + readline.get_line_buffer())
+    sys.stdout.flush()
+
 readline.set_completer(completer) # register your tab completion function
 readline.parse_and_bind("tab: complete") # bind tab key to completion
-
+readline.set_completion_display_matches_hook(display_matches)
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
