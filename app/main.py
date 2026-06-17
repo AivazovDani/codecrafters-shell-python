@@ -25,7 +25,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
-                return options[0]
+                return options[0] + ' '
 
                 return None # tell readline there are no more commands
 
