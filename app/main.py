@@ -11,9 +11,9 @@ autocomplete = builtins.copy()
 
 # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
 for directory in os.environ.get('PATH', '').split(":"):
-    if os.path.exists(directory)
-    dir_list = os.listdir(directory)
-    autocomplete += dir_list
+    if os.path.exists(directory):
+        dir_list = os.listdir(directory)
+        autocomplete += dir_list
 
 def completer(text, state):
             # all commands the user would type
