@@ -16,8 +16,11 @@ for directory in os.environ.get('PATH', '').split(":"):
         autocomplete += dir_list
 
 autocomplete = sorted(autocomplete)
+bell_rung = False
 
 def completer(text, state):
+
+            global = bell_rung
             # all commands the user would type
             options = []
 
@@ -28,20 +31,24 @@ def completer(text, state):
             
             if len(options) == 1:
                 return options[state]
-                
+
             if len(options) > 1:
-                if state == 0:
-
+                if not bell_rung and state == 0:
                     sys.stdout.write('\x07')
-                    sys.stdout.flush()
-
-                if state == 0 and len(options) > 1:
+                    sys.stdout.flush() # forces python to immediatly write to the terminal
+                    bell_rung = True
                     return None
-                    
-            return sys.stdout.write('  '.join(options))
+                elif bell_rung and state == 0:
+                    sys.stdout.write('\n')
+                    sys.stdout.write('  '.join(o for o in options))
+                    sys.stdout.write('\n$ ')
+                    sys.stdout.write(text)
+                    sys.stdout.flush()
+                    bell_rung = False
+                    return None # tells readline there are no more commands
             
-
-
+            return None
+            
 
 readline.set_completer(completer) # register your tab completion function
 readline.parse_and_bind("tab: complete") # bind tab key to completion
