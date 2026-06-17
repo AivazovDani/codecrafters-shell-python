@@ -20,7 +20,7 @@ bell_rung = False
 
 def completer(text, state):
 
-            global = bell_rung
+            global bell_rung
             # all commands the user would type
             options = []
 
