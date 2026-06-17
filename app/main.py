@@ -43,14 +43,13 @@ def completer(text, state):
                     sys.stdout.write('\n')
                     sys.stdout.write('  '.join(o for o in options))
                     sys.stdout.write('\n$ ')
-                    sys.stdout.write(text)
+                    sys.stdout.write(readline.get_line_buffer())
                     sys.stdout.flush()
                     bell_rung = False
                     return None # tells readline there are no more commands
             
             return None
             
-readline.set_completer_delims('')  # don't split on any characters
 readline.set_completer(completer) # register your tab completion function
 readline.parse_and_bind("tab: complete") # bind tab key to completion
 
