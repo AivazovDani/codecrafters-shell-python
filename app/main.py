@@ -35,6 +35,8 @@ import readline # library that adds arrow keys up down like a real shell and rem
 # readline.set_completer(completer) # register your tab completion function
 # readline.parse_and_bind("tab: complete") # bind tab key to completion
 
+BUILTINS = {"echo", "exit", "type", "pwd", "cd"}
+
 readline.set_completer(
     lambda t, s: ([c + " " for c in BUILTINS if c.startswith(t)] + [None])[s]
 )
