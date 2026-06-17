@@ -5,6 +5,9 @@ import subprocess
 import shlex # splitting '', "", /, _ and spaces. Everything
 import readline # library that adds arrow keys up down like a real shell and remembers history of commands
 
+import glob
+
+
 # Handeling TAB completion for build in commands and PATH executables | HARD
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
 
@@ -27,7 +30,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                options = [cmd for cmd in os.listdir('.') if cmd.startswith(text)]
+                options = glob.glob(text + '*')
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
