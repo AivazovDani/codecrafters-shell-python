@@ -15,18 +15,22 @@ for directory in os.environ.get('PATH', '').split(":"):
         dir_list = os.listdir(directory)
         autocomplete += dir_list
 
+autocomplete = sorted(autocomplete)
+
 def completer(text, state):
             # all commands the user would type
             options = []
 
             # check builtins
-            options += [cmd + ' ' for cmd in sorted(autocomplete) if cmd.startswith(text)]
+            options += [cmd + ' ' for cmd in autocomplete if cmd.startswith(text)]
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
             if state == 0:
                 return options[0]
             elif state == 1:
-                return ' '.join(cmd for cmd in options)
+                for cmd in options:
+                    print(cmd, end=' ')
+                return
 
 
 readline.set_completer(completer) # register your tab completion function
