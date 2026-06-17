@@ -5,35 +5,35 @@ import subprocess
 import shlex # splitting '', "", /, _ and spaces. Everything
 import readline # library that adds arrow keys up down like a real shell and remembers history of commands
 
-# Handeling TAB completion for build in commands and PATH executables
+# Handeling TAB completion for build in commands and PATH executables | HARD
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
 
-def completer(text, state):
+def completer(text, state): # built in eadline but overriding it to fit my case
             options = []
             # check builtins
             options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
             
-            if len(options) == 0:
+            if len(options) == 0: # if we don\t have any PATH executable in our list with commands
                 # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
                 for directory in os.environ.get('PATH', '').split(":"):
                     if os.path.exists(directory):
-                        options += [f for f in os.listdir(directory) if f.startswith(text)]
+                        options += [f for f in os.listdir(directory) if f.startswith(text)] # checking for all the commands that match our stdin
                 
-                options = sorted(options)
+                options = sorted(options) # sorting alfabetically | worst case O(log n)
 
 
-            if len(options) == 1 and state == 0:
-                return options[0] + " "
+            if len(options) == 1 and state == 0: # if there is only 1 executable match
+                return options[0]
 
-                return None
+                return None # tell readline there are no more commands
 
             return options[state] if state < len(options) else None
 
 
             
-def display_matches(substitution, options, longest_match_len):
+def display_matches(substitution, options, longest_match_len): # this is build in readline but i override it to fit my case
     print()
     print("  ".join(sorted(options)))
 
@@ -42,7 +42,8 @@ def display_matches(substitution, options, longest_match_len):
 
 readline.set_completer(completer) # register your tab completion function
 readline.parse_and_bind("tab: complete") # bind tab key to completion
-readline.set_completion_display_matches_hook(display_matches)
+readline.set_completion_display_matches_hook(display_matches) # runs when there are more than one match to show
+
 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
