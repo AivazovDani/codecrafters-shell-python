@@ -19,14 +19,14 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                 # checking for executables in each directory in PATH (directories in linux where executable programs are stored)
                 for directory in os.environ.get('PATH', '').split(":"):
                     if os.path.exists(directory):
-                        options += [f for f in os.listdir(directory) if f.startswith(text)] # checking for all the commands that match our stdin
+                        options += [f + ' ' for f in os.listdir(directory) if f.startswith(text)] # checking for all the commands that match our stdin
                 
                 options = sorted(options) # sorting alfabetically | worst case O(log n)
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
-                return options[0] + ' '
-
+                return options[0]
+                
                 return None # tell readline there are no more commands
 
             return options[state] if state < len(options) else None
