@@ -25,16 +25,21 @@ def completer(text, state):
             options += [cmd + ' ' for cmd in autocomplete if cmd.startswith(text)]
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
-            if len(options) > 1 and state == 0:
-                sys.stdout.write('\x07')
-                return None
-            if len(options) and state == 1:
-                sys.stdout.write('  '.join(options))
-                sys.stdout.write('\n$ ')
-                sys.stdout.write(text)
-                return None
+            
             if len(options) == 1:
                 return options[state]
+                
+            if len(options) > 1:
+                if state == 0:
+
+                    sys.stdout.write('\x07')
+                    sys.stdout.flush()
+
+                if state == 0 and len(options) > 1:
+                    return None
+                    
+            return sys.stdout.write('  '.join(options))
+            
 
 
 
