@@ -20,12 +20,13 @@ def completer(text, state):
             options = []
 
             # check builtins
-            options += [cmd + ' ' for cmd in autocomplete if cmd.startswith(text)]
+            options += [cmd + ' ' for cmd in sorted(autocomplete) if cmd.startswith(text)]
             
             # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
-            if state < len(options):
-                return options[state]
-            return None
+            if state == 0:
+                return options[0]
+            elif state == 1:
+                return ' '.join(cmd for cmd in options)
 
 
 readline.set_completer(completer) # register your tab completion function
