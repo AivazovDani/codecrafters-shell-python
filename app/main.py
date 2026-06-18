@@ -34,10 +34,10 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                 if '/' in readline.get_line_buffer():
                     parts = text.rsplit("/")
                     dir_path = parts[0]
-                    file_text = parts[1]
+                    text = parts[1]
 
 
-                    options = [dir_path + '/' + f + ' ' for f in os.listdir(dir_path) if f.startswith(file_text)]
+                    options = [dir_path + '/' + f + ' ' for f in os.listdir(dir_path) if f.startswith(text)]
 
                 else:
                     options = [f + " " for f in os.listdir(".") if f.startswith(text)]
