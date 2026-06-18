@@ -12,8 +12,9 @@ import glob
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
 
 def completer(text, state): # built in eadline but overriding it to fit my case
-            line = readline.get_line_buffer()
-            words = line.split()
+
+            line = readline.get_line_buffer() # get's the command the user typed from the buffer
+            words = line.split() # split it into parts to determine if there are 2 or less. If less the user is still typing a command not an args
             options = []
             # check builtins
 
@@ -33,8 +34,8 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                word = readline.get_line_buffer().split()[-1]
-                parts = word.rsplit("/", 1)
+                word = readline.get_line_buffer().split()[-1] # get the args only
+                parts = word.rsplit("/", 1) # split them by /
                 
                 if len(parts) > 1 and os.path.isdir(parts[0]):
                     path = parts[0]
@@ -42,8 +43,16 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                 else:
                     path = "."
                     prefix = word
-    
-                options = [f + ' ' for f in os.listdir(path) if f.startswith(prefix)]
+
+
+                options = []
+                for f in os.listdir(path):
+                    if f.startswith(prefix):
+                        full_path = os.path.join(path, f) if path != "." else f
+                        if os.path.isdir(full_path):
+                            options.append(full_path + '/')
+                        else:
+                            options.append(full_path + ' ')
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
