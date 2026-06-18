@@ -16,6 +16,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
             # check builtins
 
             if ' ' not in readline.get_line_buffer(): # if we have space means the command is typed and we're waiting for args
+                # readline.get_line_buffer() return the full current line the user has typed, cause the command variable is set in our main function and this is outside it
                 options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
 
                 # here the state means how many times we pressed the tab. Each time we press the tab we cycle throught the commands in our options. Readlines update the state every time like: tab 1 = state=0 ; tab 2 = state=1. So the state it becomes index we can use to get the options in our list
@@ -30,7 +31,18 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                options = [f + " " for f in os.listdir(".") if f.startswith(text)]
+                if '/' in readline.get_line_buffer():
+                    parts = text.split("/")
+                    dir_path = '/'.join(parts[:-1])
+                    file_text = parts[-1]
+
+                    searched_dir = dir_path if dir_path else '.'
+
+                    if os.path.isdir(searched_dir):
+                        options = [dir_path + "/" + f + ' 'for f in os.listdir(searched_dir) if f.startswith(file_text)]
+
+                else:
+                    options = [f + " " for f in os.listdir(".") if f.startswith(text)]
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
