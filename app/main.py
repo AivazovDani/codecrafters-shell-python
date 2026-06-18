@@ -31,14 +31,14 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                if '/' in text:
+                if '/' in readline.get_line_buffer():
                     path = "."
                     parts = text[-1].rsplit("/", 1)
                     if len(parts) > 1 and os.path.isdir(parts[0]):
                         path = parts[0]
                         text = parts[1]
 
-                    options = [f for f in os.listdir(path) if f.startswith(text)]
+                    options = [dir_path + '/' + f + ' ' for f in os.listdir(path) if f.startswith(text)]
 
                 else:
                     options = [f + " " for f in os.listdir(".") if f.startswith(text)]
