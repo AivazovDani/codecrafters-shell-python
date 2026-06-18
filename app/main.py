@@ -9,7 +9,7 @@ import glob
 
 
 # Handeling TAB completion for build in commands and PATH executables | HARD
-builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
+builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete']
 
 def completer(text, state): # built in eadline but overriding it to fit my case
 
@@ -43,16 +43,8 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                 else:
                     path = "."
                     prefix = word
-
-
-                options = []
-                for f in os.listdir(path):
-                    if f.startswith(prefix):
-                        full_path = os.path.join(path, f) if path != "." else f
-                        if os.path.isdir(full_path):
-                            options.append(full_path + '/')
-                        else:
-                            options.append(full_path + ' ')
+    
+                options = [f + ' ' for f in os.listdir(path) if f.startswith(prefix)]
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
