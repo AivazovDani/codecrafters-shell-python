@@ -156,6 +156,13 @@ def main():
 
                 else:
                     print(f'{command}: not found')
+
+
+        elif command.startswith('complete'):
+            parts = command.split()
+            cmd = parts[-1]
+            if '-p' in parts[1]:
+                print(f'complete: {cmd}: no completion specification')
                 
 
         else:
