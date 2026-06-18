@@ -31,12 +31,15 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
+                print(f"\nDEBUG text={text!r}", file=sys.stderr)
+                print(f"\nDEBUG words={readline.get_line_buffer()!r}", file=sys.stderr)
                 path = "."
                 parts = text.rsplit("/", 1)  # split text not text[-1]
                 if len(parts) > 1 and os.path.isdir(parts[0]):
                     path = parts[0]
                     text = parts[1]
                 options = [path + '/' + f + ' ' if path != '.' else f + ' ' for f in os.listdir(path) if f.startswith(text)]
+                print(options)
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
