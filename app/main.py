@@ -5,8 +5,7 @@ import subprocess
 import shlex # splitting '', "", /, _ and spaces. Everything
 import readline # library that adds arrow keys up down like a real shell and remembers history of commands
 
-import glob
-
+completers = {}
 
 # Handeling TAB completion for build in commands and PATH executables | HARD
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete']
@@ -160,9 +159,23 @@ def main():
 
         elif command.startswith('complete'):
             parts = command.split()
-            cmd = parts[-1]
-            if '-p' in parts[1]:
-                print(f'complete: {cmd}: no completion specification')
+        
+            flag = parts[1]
+
+            if flag == '-p':
+                cmd = parts[2]
+
+                if cmd in completers:
+                    print(f"complete -C '{completers[cmd]}' {cmd}")
+                else:
+                    print(f'complete: {cmd}: no completion specification')
+            
+            elif flag == '-C':
+                path = parts[2]
+                cmd = parts[3]
+
+                completers[cmd] = path
+
                 
 
         else:
@@ -175,6 +188,8 @@ def main():
                 subprocess.run([cmd] + args) # finds the command (bin/cat) and executes it with the arguments (main.py) | subprocess
             else:
                 print(f'{cmd}: command not found')
+
+
 
 if __name__ == "__main__":
     main()
