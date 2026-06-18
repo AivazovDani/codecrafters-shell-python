@@ -39,7 +39,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     searched_dir = dir_path if dir_path else '.'
 
                     if os.path.isdir(searched_dir):
-                        options = [dir_path + "/" + f + ' 'for f in os.listdir(searched_dir) if f.startswith(file_text)]
+                        options = [dir_path + f + ' 'for f in os.listdir(searched_dir) if f.startswith(file_text)]
 
                 else:
                     options = [f + " " for f in os.listdir(".") if f.startswith(text)]
