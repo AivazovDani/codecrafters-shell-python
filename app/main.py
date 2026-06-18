@@ -12,10 +12,12 @@ import glob
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd']
 
 def completer(text, state): # built in eadline but overriding it to fit my case
+            line = readline.get_line_buffer()
+            words = line.split()
             options = []
             # check builtins
 
-            if ' ' not in readline.get_line_buffer(): # if there is no space measn the user has typed a command not args to a command for autocomplete
+            if len(words) <= 1: # if there is no space measn the user has typed a command not args to a command for autocomplete
                 # readline.get_line_buffer() return the full current line the user has typed, cause the command variable is set in our main function and this is outside it
                 options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
 
@@ -31,8 +33,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                word = readline.get_line_buffer().split()[-1]
-                parts = word.rsplit("/", 1)
+                parts = words.rsplit("/", 1)
                 
                 if len(parts) > 1 and os.path.isdir(parts[0]):
                     path = parts[0]
