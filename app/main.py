@@ -5,6 +5,7 @@ import subprocess
 import shlex # splitting '', "", /, _ and spaces. Everything
 import readline # library that adds arrow keys up down like a real shell and remembers history of commands
 
+# Programmic Completions
 completers = {}
 
 # Handeling TAB completion for build in commands and PATH executables | HARD
@@ -16,6 +17,20 @@ def completer(text, state): # built in eadline but overriding it to fit my case
             words = line.split() # split it into parts to determine if there are 2 or less. If less the user is still typing a command not an args
             options = []
             # check builtins
+
+            # checks for command then space and searches in completers for the command and sujest commands
+            if ' ' in line and len(words) >= 1 and words[0] in completers:
+                if state == 0:  # only run once
+                    completer_path = completers[words[0]]
+                    result = subprocess.run(
+                        [completer_path, words[0], text, words[-1]],
+                        capture_output=True,
+                        text=True
+                    )
+                    options = [line + ' ' for line in result.stdout.splitlines()]
+                    return options[0] if options else None
+                return None
+
 
             if len(words) <= 1: # if there is no space measn the user has typed a command not args to a command for autocomplete
                 # readline.get_line_buffer() return the full current line the user has typed, cause the command variable is set in our main function and this is outside it
