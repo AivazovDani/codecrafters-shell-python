@@ -41,7 +41,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     path = "."
                     prefix = word
     
-                options = [path + '/' + f + ' ' for f in os.listdir(path) if f.startswith(prefix)]
+                options = [f + ' ' for f in os.listdir(path) if f.startswith(prefix)]
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
