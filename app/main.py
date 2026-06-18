@@ -15,6 +15,15 @@ def completer(text, state): # built in eadline but overriding it to fit my case
             options = []
             # check builtins
 
+            if '/' in readline.get_line_buffer():
+                    path = "."
+                    parts = text[-1].rsplit("/", 1)
+                    if len(parts) > 1 and os.path.isdir(parts[0]):
+                        path = parts[0]
+                        text = parts[1]
+
+                    options = [f + ' ' for f in os.listdir(path) if f.startswith(text)]
+
             if ' ' not in readline.get_line_buffer(): # if we have space means the command is typed and we're waiting for args
                 # readline.get_line_buffer() return the full current line the user has typed, cause the command variable is set in our main function and this is outside it
                 options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
@@ -31,17 +40,8 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                if '/' in readline.get_line_buffer():
-                    path = "."
-                    parts = text[-1].rsplit("/", 1)
-                    if len(parts) > 1 and os.path.isdir(parts[0]):
-                        path = parts[0]
-                        text = parts[1]
-
-                    options = [f + ' ' for f in os.listdir(path) if f.startswith(text)]
-
-                else:
-                    options = [f + " " for f in os.listdir(".") if f.startswith(text)]
+            
+                options = [f + " " for f in os.listdir(".") if f.startswith(text)]
 
 
             if len(options) == 1 and state == 0: # if there is only 1 executable match
