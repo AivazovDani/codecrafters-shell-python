@@ -32,7 +32,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
             
             else:
                 if '/' in readline.get_line_buffer():
-                    parts = text.rsplit("/")
+                    parts = text.rsplit("/", 1)
                     dir_path = parts[0]
                     text = parts[1]
 
