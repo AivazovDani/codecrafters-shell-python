@@ -38,7 +38,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                         path = parts[0]
                         text = parts[1]
 
-                    options = [dir_path + '/' + f + ' ' for f in os.listdir(path) if f.startswith(text)]
+                    options = [f + ' ' for f in os.listdir(path) if f.startswith(text)]
 
                 else:
                     options = [f + " " for f in os.listdir(".") if f.startswith(text)]
