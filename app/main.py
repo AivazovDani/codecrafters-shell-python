@@ -33,7 +33,8 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = sorted(options) # sorting alfabetically | worst case O(log n)
             
             else:
-                parts = words.rsplit("/", 1)
+                word = readline.get_line_buffer().split()[-1]
+                parts = word.rsplit("/", 1)
                 
                 if len(parts) > 1 and os.path.isdir(parts[0]):
                     path = parts[0]
