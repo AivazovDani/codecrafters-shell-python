@@ -37,9 +37,9 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     options = [line + ' ' for line in result.stdout.splitlines()]
                     # "push\npull\n".splitlines() > ["push", "pull"]
                     # ["push " , "pull "] after adding trailing space
-                    return options[0] if options else None
+                    return options[state] if options else None
             
-                return None
+                    return None
 
 
             if len(words) <= 1: # if there is no space means the user has typed a command not args to a command for autocomplete
