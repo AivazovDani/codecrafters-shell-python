@@ -11,6 +11,10 @@ completers = {}
 # Handeling TAB completion for build in commands and PATH executables | HARD
 builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs']
 
+# Background Jobs List
+jobs = []
+
+
 def completer(text, state): # built in eadline but overriding it to fit my case
 
             line = readline.get_line_buffer() # get's the command the user typed from the buffer
@@ -205,8 +209,24 @@ def main():
                     print(f'complete: {cmd}: no completion specification')
 
                 
-        elif command == 'jobs':
-            pass
+        elif command.startswith('jobs'):
+            parts = command.split()
+            last_part = parts[-1]
+
+            if last_part == '&':
+                command.replace("&", "")
+                parts = shlex.split(command)
+                cmd = parts[0]
+                args = parts[1:]
+                
+                path = shutil.which(cmd) # finds full path of executable in PATH and checks for executable permissions
+                if path:
+                    process = subprocess.Popen([path] + args) # starts a process and returns immediately without waiting for it to finish:
+                    jobs.append(process)
+                    print(f'[{len(jobs)}] {process.pid}')
+                else:
+                    print(f'{cmd}: command not found')
+
                 
 
         else:
