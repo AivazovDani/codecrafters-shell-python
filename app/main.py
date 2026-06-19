@@ -211,7 +211,11 @@ def main():
 
                 
         elif command == 'jobs':
-            pass
+            for i, process in enumerate(jobs):
+                if process.poll() is None:  # means job is still running
+                    print(f'[{i+1}]  {'Running':<24}{process}')
+                else:
+                    print(f'[{i+1}] Done')
 
         elif command.endswith('&'):
             command = command.rstrip('&').strip()
