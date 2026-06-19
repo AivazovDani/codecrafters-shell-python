@@ -230,7 +230,12 @@ def main():
                 print(f'[{i+1}]{marker}  {status:<21}{original}{suffix}')
             
             
-            for i, (process, original) in enumerate(jobs): # iterating over a copy because if we remove jobs from the original we change the index of the list and we need to keep track of the indexes
+            for i in range(len(jobs)):
+                if jobs[i] == None:
+                    continue
+                
+                process, original = jobs[i]
+                
                 if process.poll() is not None:
                     jobs[i] = None
 
