@@ -220,6 +220,15 @@ def main():
                     else:
                         marker = ' '
                     print(f'[{i+1}]{marker}  {"Running":<24}{original} &')
+                else:
+                    if i == len(jobs) - 1:
+                        marker = '+'
+                    elif i == len(jobs) - 2:
+                        marker = '-'
+                    else:
+                        marker = ' '
+                    print(f'[{i+1}]{marker}  {"Done":<24}{original} &')
+
 
         elif command.endswith('&'):
             command = command.rstrip('&').strip()
