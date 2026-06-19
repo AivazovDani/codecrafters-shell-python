@@ -22,10 +22,17 @@ def completer(text, state): # built in eadline but overriding it to fit my case
             if ' ' in line and len(words) >= 1 and words[0] in completers:
                 if state == 0:
                     completer_path = completers[words[0]] # get the path for the command in completers
+                    
+                    env = os.environ.copy() # copy of all the enviroment variables as a dict into env
+                    env['COMP_LINE'] = line # set a new key, value
+                    env['COMP_POINT'] = str(len(line))
+                    
+                    
                     result = subprocess.run(
                         [completer_path, words[0], text, words[-2] if len(words) > 2 else words[0]], # by default subprocess accept 3 args
                         capture_output=True,
-                        text=True
+                        text=True,
+                        env=env
                     )
                     options = [line + ' ' for line in result.stdout.splitlines()]
                     # "push\npull\n".splitlines() > ["push", "pull"]
@@ -35,7 +42,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                 return None
 
 
-            if len(words) <= 1: # if there is no space measn the user has typed a command not args to a command for autocomplete
+            if len(words) <= 1: # if there is no space means the user has typed a command not args to a command for autocomplete
                 # readline.get_line_buffer() return the full current line the user has typed, cause the command variable is set in our main function and this is outside it
                 options += [cmd + ' ' for cmd in builtins if cmd.startswith(text)]
 
