@@ -222,9 +222,9 @@ def main():
 
                 not_none_indices = [i for i in range(len(jobs)) if jobs[i] is not None]
                 
-                if i == len(not_none_indices) - 1:      # highest job number
+                if i == not_none_indices[-1]:      # highest job number
                     marker = '+'
-                elif i == len(not_none_indices) - 2:    # second highest job number
+                elif i == not_none_indices[-2]:    # second highest job number
                     marker = '-'
                 else:
                     marker = ' '
