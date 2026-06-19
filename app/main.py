@@ -210,20 +210,21 @@ def main():
 
                 
         elif command.startswith('jobs'):
+            pass
 
-            if command.endswith('&'):
-                command = command.rstrip('&').strip()
-                parts = shlex.split(command)
-                cmd = parts[0]
-                args = parts[1:]
-                
-                path = shutil.which(cmd) # finds full path of executable in PATH and checks for executable permissions
-                if path:
-                    process = subprocess.Popen([path] + args) # starts a process and returns immediately without waiting for it to finish:
-                    jobs.append(process)
-                    print(f'[{len(jobs)}] {process.pid}')
-                else:
-                    print(f'{cmd}: command not found')
+        if command.endswith('&'):
+            command = command.rstrip('&').strip()
+            parts = shlex.split(command)
+            cmd = parts[0]
+            args = parts[1:]
+            
+            path = shutil.which(cmd) # finds full path of executable in PATH and checks for executable permissions
+            if path:
+                process = subprocess.Popen([path] + args) # starts a process and returns immediately without waiting for it to finish:
+                jobs.append(process)
+                print(f'[{len(jobs)}] {process.pid}')
+            else:
+                print(f'{cmd}: command not found')
 
                 
 
