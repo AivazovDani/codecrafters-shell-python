@@ -211,7 +211,12 @@ def main():
 
                 
         elif command == 'jobs':
-            for i, (process, original) in enumerate(jobs):
+            for i in range((len)jobs):
+                if jobs[i] == None:
+                    continue
+
+                process, original = jobs[i]
+
                 status = 'Running' if process.poll() is None else 'Done'
                 suffix = ' &' if process.poll() is None else ''
                 
@@ -221,13 +226,13 @@ def main():
                     marker = '-'
                 else:
                     marker = ' '
-                
+            
                 print(f'[{i+1}]{marker}  {status:<21}{original}{suffix}')
             
             
-            for process, original in jobs[:]: # iterating over a copy because if we remove jobs from the original we change the index of the list and we need to keep track of the indexes
+            for i, (process, original) in enumerate(jobs): # iterating over a copy because if we remove jobs from the original we change the index of the list and we need to keep track of the indexes
                 if process.poll() is not None:
-                    jobs.remove((process, original))
+                    jobs[i] = None
 
 
         elif command.endswith('&'):
