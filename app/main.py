@@ -210,11 +210,9 @@ def main():
 
                 
         elif command.startswith('jobs'):
-            parts = command.split()
-            last_part = parts[-1]
 
-            if last_part == '&':
-                command.replace("&", "")
+            if command.endswith('&'):
+                command = command.rstrip('&').strip()
                 parts = shlex.split(command)
                 cmd = parts[0]
                 args = parts[1:]
