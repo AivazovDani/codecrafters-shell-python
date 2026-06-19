@@ -210,7 +210,7 @@ def main():
                     print(f'complete: {cmd}: no completion specification')
 
                 
-        elif cmd == 'jobs':
+        elif command == 'jobs':
             for i, (process, original) in enumerate(jobs):
                 if process.poll() is None:
                     print(f'[{i+1}]+  {"Running":<24}{original} &')
