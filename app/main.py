@@ -39,7 +39,6 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                     # ["push " , "pull "] after adding trailing space
                     return options[state] if options else None
             
-                    return None
 
 
             if len(words) <= 1: # if there is no space means the user has typed a command not args to a command for autocomplete
@@ -80,10 +79,9 @@ def completer(text, state): # built in eadline but overriding it to fit my case
 
 
 def display_matches(substitution, options, longest_match_len): # this is build in readline but i override it to fit my case
-    print()
-    print("  ".join(sorted(options)))
-
-    sys.stdout.write("$ " + readline.get_line_buffer())
+    sys.stdout.write("\n")
+    sys.stdout.write("  ".join(options))
+    sys.stdout.write("\n$ " + readline.get_line_buffer())
     sys.stdout.flush()
 
 readline.set_completer(completer) # register your tab completion function
