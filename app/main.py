@@ -211,15 +211,13 @@ def main():
 
                 
         elif command == 'jobs':
-            running = [(i, p, cmd) for i, (p, cmd) in enumerate(jobs) if p.poll() is None]
-            
             for i, (process, original) in enumerate(jobs):
                 status = 'Running' if process.poll() is None else 'Done'
                 suffix = ' &' if process.poll() is None else ''
                 
-                if len(running) > 0 and i == running[-1][0]: # gives us the last tuple, then the index of the last tuple
+                if i == len(jobs) - 1:      # highest job number
                     marker = '+'
-                elif len(running) > 1 and i == running[-2][0]: # same but for the second last
+                elif i == len(jobs) - 2:    # second highest job number
                     marker = '-'
                 else:
                     marker = ' '
