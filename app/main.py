@@ -199,12 +199,12 @@ def main():
                 completers[cmd] = path
             
             elif flag == '-r':
-                cmd = parts[2]
-
                 if cmd in completers:
-                    print(f"complete -C '{completers[cmd]}' {cmd}")
+                    del completers[cmd]
                 else:
                     print(f'complete: {cmd}: no completion specification')
+
+                
 
                 
 
