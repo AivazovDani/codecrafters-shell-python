@@ -222,7 +222,7 @@ def main():
                 else:
                     marker = ' '
                 
-                print(f'[{i+1}]{marker}  {status:<24}{original}{suffix}')
+                print(f'[{i+1}]{marker}  {status:<21}{original}{suffix}')
             
             
             for process, original in jobs[:]: # iterating over a copy because if we remove jobs from the original we change the index of the list and we need to keep track of the indexes
