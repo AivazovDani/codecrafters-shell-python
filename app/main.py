@@ -213,22 +213,19 @@ def main():
         elif command == 'jobs':
             for i, (process, original) in enumerate(jobs):
                 if process.poll() is None:
-                    if i == len(jobs) - 1:
-                        marker = '+'
-                    elif i == len(jobs) - 2:
-                        marker = '-'
-                    else:
-                        marker = ' '
-                    print(f'[{i+1}]{marker}  {"Running":<24}{original} &')
+                    status = 'Running'
                 else:
-                    if i == len(jobs) - 1:
-                        marker = '+'
-                    elif i == len(jobs) - 2:
-                        marker = '-'
-                    else:
-                        marker = ' '
-                    print(f'[{i+1}]{marker}  {"Done":<21}{original}')
-                    jobs.remove((process, original))
+                    status = 'Done'
+                    
+                if i == len(jobs) - 1:
+                    marker = '+'
+                elif i == len(jobs) - 2:
+                    marker = '-'
+                else:
+                    marker = ' '
+                
+                suffix = ' &' if process.poll() is None else ''
+                print(f'[{i+1}]{marker}  {status:<21}{original}{suffix}')
 
 
         elif command.endswith('&'):
