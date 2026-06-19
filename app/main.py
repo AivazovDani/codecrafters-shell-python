@@ -219,15 +219,17 @@ def main():
 
                 status = 'Running' if process.poll() is None else 'Done'
                 suffix = ' &' if process.poll() is None else ''
+
+                not_none_indices = [i for i in range(len(jobs)) if jobs[i] is not None]
                 
-                if i == len(jobs) - 1:      # highest job number
+                if i == len(not_none_indices) - 1:      # highest job number
                     marker = '+'
-                elif i == len(jobs) - 2:    # second highest job number
+                elif i == len(not_none_indices) - 2:    # second highest job number
                     marker = '-'
                 else:
                     marker = ' '
             
-                print(f'[{i+1}]{marker}  {status:<21}{original}{suffix}')
+                print(f'[{i+1}]{marker}  {status:<24}{original}{suffix}')
             
             
             for i in range(len(jobs)):
