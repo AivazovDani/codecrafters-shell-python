@@ -271,7 +271,19 @@ def main():
             path = shutil.which(cmd) # finds full path of executable in PATH and checks for executable permissions
             if path:
                 process = subprocess.Popen([path] + args) # starts a process and returns immediately without waiting for it to finish:
-                jobs.append((process, command))
+                
+                slot_found = False
+                for i in range(len(jobs)):
+
+                    if jobs[i] == None:
+                        slot_found = True
+                        break
+                
+                if slot_found:
+                    jobs[i] = (process, command)
+                else:
+                    jobs.append((process, command))
+
                 print(f'[{len(jobs)}] {process.pid}')
             else:
                 print(f'{cmd}: command not found')
