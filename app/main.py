@@ -216,7 +216,7 @@ def main():
                     status = 'Running'
                 else:
                     status = 'Done'
-                    
+
                 if i == len(jobs) - 1:
                     marker = '+'
                 elif i == len(jobs) - 2:
@@ -225,7 +225,7 @@ def main():
                     marker = ' '
                 
                 suffix = ' &' if process.poll() is None else ''
-                print(f'[{i+1}]{marker}  {status:<21}{original}{suffix}')
+                print(f'[{i+1}]{marker}  {status:<24}{original}{suffix}')
 
 
         elif command.endswith('&'):
