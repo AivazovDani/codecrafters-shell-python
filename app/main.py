@@ -223,6 +223,11 @@ def main():
                     marker = ' '
                 
                 print(f'[{i+1}]{marker}  {status:<24}{original}{suffix}')
+            
+            
+            for process, original in jobs[:]: # iterating over a copy because if we remove jobs from the original we change the index of the list and we need to keep track of the indexes
+                if process.poll() is not None:
+                    jobs.remove((process, original))
 
 
         elif command.endswith('&'):
