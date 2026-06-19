@@ -210,12 +210,10 @@ def main():
                     print(f'complete: {cmd}: no completion specification')
 
                 
-        elif command == 'jobs':
-            for i, process in enumerate(jobs):
-                if process.poll() is None:  # means job is still running
-                    print(f'[{i+1}]  {'Running':<24}{process}')
-                else:
-                    print(f'[{i+1}] Done')
+        elif cmd == 'jobs':
+            for i, (process, original) in enumerate(jobs):
+                if process.poll() is None:
+                    print(f'[{i+1}]+  {"Running":<24}{original} &')
 
         elif command.endswith('&'):
             command = command.rstrip('&').strip()
@@ -226,7 +224,7 @@ def main():
             path = shutil.which(cmd) # finds full path of executable in PATH and checks for executable permissions
             if path:
                 process = subprocess.Popen([path] + args) # starts a process and returns immediately without waiting for it to finish:
-                jobs.append(process)
+                jobs.append((process, command))
                 print(f'[{len(jobs)}] {process.pid}')
             else:
                 print(f'{cmd}: command not found')
