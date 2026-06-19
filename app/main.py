@@ -205,7 +205,8 @@ def main():
                     print(f'complete: {cmd}: no completion specification')
 
                 
-
+        elif command == 'jobs':
+            pass
                 
 
         else:
