@@ -23,7 +23,7 @@ def completer(text, state): # built in eadline but overriding it to fit my case
                 if state == 0:
                     completer_path = completers[words[0]] # get the path for the command in completers
                     result = subprocess.run(
-                        [completer_path, words[0], text, words[-1]], # by default subprocess accept 3 args
+                        [completer_path, words[0], text, words[-2]], # by default subprocess accept 3 args
                         capture_output=True,
                         text=True
                     )
