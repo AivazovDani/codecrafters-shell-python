@@ -209,7 +209,7 @@ def main():
                     print(f'complete: {cmd}: no completion specification')
 
                 
-        elif command.startswith('jobs'):
+        elif command == 'jobs':
             pass
 
         if command.endswith('&'):
