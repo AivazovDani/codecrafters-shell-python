@@ -211,7 +211,7 @@ def main():
 
                 
         elif command == 'jobs':
-            for i in range((len)jobs):
+            for i in range(len(jobs)):
                 if jobs[i] == None:
                     continue
 
