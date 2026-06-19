@@ -227,7 +227,7 @@ def main():
                         marker = '-'
                     else:
                         marker = ' '
-                    print(f'[{i+1}]{marker}  {"Done":<24}{original} &')
+                    print(f'[{i+1}]{marker}  {"Done":<21}{original}')
                     jobs.remove((process, original))
 
 
