@@ -171,7 +171,10 @@ def main():
         elif command.startswith("type"):
             command = command.replace('type ','')
 
-            if command in builtins:
+            if command == 'jobs':
+                pass
+
+            elif command in builtins:
                 print(f'{command} is a shell builtin')
 
             else:
