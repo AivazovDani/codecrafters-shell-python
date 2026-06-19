@@ -228,7 +228,7 @@ def main():
                     else:
                         marker = ' '
                     print(f'[{i+1}]{marker}  {"Done":<24}{original} &')
-                    jobs.remove(original)
+                    jobs.remove((process, original))
 
 
         elif command.endswith('&'):
