@@ -95,6 +95,26 @@ readline.set_completion_display_matches_hook(display_matches) # runs when there 
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
     while True:
+
+        for i in range(len(jobs)):
+            if jobs[i] == None:
+                continue
+            
+            process, original = jobs[i]
+
+            if process.poll() is not None:
+                not_none_indicess = [i for i in range(len(jobs)) if jobs[i] is not None]
+                
+                if i == not_none_indicess[-1] or len(not_none_indicess) == 1: # highest job number
+                    marker = '+'
+                elif i == not_none_indicess[-2]: # second highest job number
+                    marker = '-'
+                else:
+                    marker = ' '
+
+                print(f'[{i+1}]{marker}  {'Done':<24}{original}')
+                jobs[i] = None
+
         sys.stdout.write("$ ")
         command = input()
         
