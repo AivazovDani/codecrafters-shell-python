@@ -9,7 +9,7 @@ import readline # library that adds arrow keys up down like a real shell and rem
 completers = {}
 
 # Handeling TAB completion for build in commands and PATH executables | HARD
-builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete']
+builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs']
 
 def completer(text, state): # built in eadline but overriding it to fit my case
 
