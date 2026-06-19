@@ -213,7 +213,13 @@ def main():
         elif command == 'jobs':
             for i, (process, original) in enumerate(jobs):
                 if process.poll() is None:
-                    print(f'[{i+1}]+  {"Running":<24}{original} &')
+                    if i == len(jobs) - 1:
+                        marker = '+'
+                    elif i == len(jobs) - 2:
+                        marker = '-'
+                    else:
+                        marker = ' '
+                    print(f'[{i+1}]{marker}  {"Running":<24}{original} &')
 
         elif command.endswith('&'):
             command = command.rstrip('&').strip()
