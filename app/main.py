@@ -331,7 +331,7 @@ def main():
 
         elif command.startswith('cd'):
             result = run_builtins(command)
-            print(result) if result != None
+            print(result) if result != None else ''
                 
         elif command.startswith("echo"):
             result = run_builtins(command)
