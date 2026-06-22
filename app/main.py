@@ -175,7 +175,7 @@ def main():
                     result = subprocess.run(shlex.split(parts[i].strip()), stdout=subprocess.PIPE)
                 
                 elif (len(parts) - 1) == i:
-                    subprocess.run(shlex.split(parts[i].strip()))
+                    subprocess.run(shlex.split(parts[i].strip()), stdin=result.stdout)
                 
                 else:
                     result = subprocess.run(shlex.split(parts[i].strip()), stdin=result.stdout)
