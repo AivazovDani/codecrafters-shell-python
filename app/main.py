@@ -92,6 +92,115 @@ readline.parse_and_bind("tab: complete") # bind tab key to completion
 readline.set_completion_display_matches_hook(display_matches) # runs when there are more than one match to show
 
 
+def run_builtins(command):
+
+    if command.split()[0] in builtins:
+                        
+        if command == 'echo':
+            parts = shlex.split(command)
+            return " ".join(parts[1:])
+
+        elif command == 'exit':
+
+            return 'exit'
+        
+        elif command == 'cd':
+            parts = command.split()
+            cmd = parts[0]
+            absolute_path = parts[1]
+
+            if os.path.exists(absolute_path): # check if the file or directory exists. Works for relative, absolute paths of directories and files
+                os.chdir(absolute_path) # change current directory to the new one
+            
+            elif absolute_path == '~':
+                os.chdir(os.path.expanduser(absolute_path)) # expand ~ to /home/yordan-ayvazov
+
+            else:
+                return f'cd: {absolute_path}: No such file or directory'
+
+        elif command == 'type':
+            command = command.replace('type ','')
+
+
+            if command in builtins:
+                return f'{command} is a shell builtin'
+
+            else:
+
+                if shutil.which(command): # checks if the file exists even outside my disk and the access status | shutil.which(cat)
+                    return f'{command} is {shutil.which(command)}'
+
+                else:
+                    return f'{command}: not found'
+
+
+        elif command == 'pwd':
+            
+            return os.getcwd() # get the absolute path of the current directory to standout
+
+        elif command == 'complete':
+            parts = command.split()
+        
+            flag = parts[1]
+
+            if flag == '-p':
+                cmd = parts[2]
+
+                if cmd in completers:
+                    return f"complete -C '{completers[cmd]}' {cmd}"
+                else:
+                    return f'complete: {cmd}: no completion specification'
+            
+            elif flag == '-C':
+                path = parts[2]
+                cmd = parts[3]
+
+                completers[cmd] = path
+            
+            elif flag == '-r':
+                if cmd in completers:
+                    del completers[cmd]
+                else:
+                    return f'complete: {cmd}: no completion specification'
+
+        elif command == 'jobs':
+            not_one_indices = [i for i in range(len(jobs)) if jobs[i] is not None]
+
+            output = ""
+
+            for i in range(len(jobs)):
+                if jobs[i] == None:
+                    continue
+
+                process, original = jobs[i]
+
+                status = 'Running' if process.poll() is None else 'Done'
+                suffix = ' &' if process.poll() is None else ''
+                
+                if i == not_none_indices[-1]:      # highest job number
+                    marker = '+'
+                elif i == not_none_indices[-2]:    # second highest job number
+                    marker = '-'
+                else:
+                    marker = ' '
+                
+                output += f'[{i+1}]{marker}  {status:<24}{original}{suffix}' + '\n'
+                        
+            for i in range(len(jobs)):
+                if jobs[i] == None:
+                    continue
+                
+                process, original = jobs[i]
+                
+                if process.poll() is not None:
+                    jobs[i] = None
+            
+            
+            return output
+
+                
+
+                
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
     while True:
@@ -120,7 +229,10 @@ def main():
         
 
         if command == 'exit':
-            break
+            
+            result = run_builtins(command)
+            if result == 'exit':
+                break
 
         elif '2>>' in command:
             parts = command.split("2>>")
@@ -169,115 +281,74 @@ def main():
         elif '|' in command:
             parts = command.split('|')
 
-            for i in range(len(parts)):
+            first_command = parts[0]
 
-                if i == 0:
-                    result = subprocess.Popen(shlex.split(parts[i].strip()), stdout=subprocess.PIPE)
+            if first_command.split()[0] in builtins:
+                result = run_builtins(first_command)
                 
-                elif (len(parts) - 1) == i:
-                    result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout)
-                    result.communicate()
-                
-                else:
-                    result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout, stdout=subprocess.PIPE)
+                if result is not None:
+                    result = result.encode()
+
+                    for i in range(1, len(parts)):
+
+                        if (len(parts) - 1) == i:
+                            if isinstance(result, bytes):
+                                result = subprocess.Popen(shlex.split(parts[i].strip()), input=result, stdout=subprocess.PIPE)
+                                result.communicate()
+
+                            else:
+                                result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout, stdout=subprocess.PIPE)
+                                result.communicate()
+
+                        
+                        else:
+                            if isinstance(result, bytes):
+                                result = subprocess.Popen(shlex.split(parts[i].strip()), input=result, stdout=subprocess.PIPE)
+                            else:
+                                result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout, stdout=subprocess.PIPE)
+
+
+            else:
+
+                for i in range(len(parts)):
+
+                    if i == 0:
+                        result = subprocess.Popen(shlex.split(parts[i].strip()), stdout=subprocess.PIPE)
+                    
+                    elif (len(parts) - 1) == i:
+                        result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout)
+                        result.communicate()
+                    
+                    else:
+                        result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout, stdout=subprocess.PIPE)
 
 
 
 
         elif command.startswith('pwd'):
-
-            print(os.getcwd()) # get the absolute path of the current directory to standout
+            result = run_builtins(command)
+            print(result)
 
         elif command.startswith('cd'):
-            parts = command.split()
-            cmd = parts[0]
-            absolute_path = parts[1]
-
-            if os.path.exists(absolute_path): # check if the file or directory exists. Works for relative, absolute paths of directories and files
-                os.chdir(absolute_path) # change current directory to the new one
-            
-            elif absolute_path == '~':
-                os.chdir(os.path.expanduser(absolute_path)) # expand ~ to /home/yordan-ayvazov
-
-            else:
-                print(f'cd: {absolute_path}: No such file or directory')
+            result = run_builtins(command)
+            print(result) if result != None
                 
         elif command.startswith("echo"):
-            parts = shlex.split(command)
-            print(" ".join(parts[1:]))
+            result = run_builtins(command)
+            print(result)
 
         elif command.startswith("type"):
-            command = command.replace('type ','')
-
-
-            if command in builtins:
-                print(f'{command} is a shell builtin')
-
-            else:
-
-                if shutil.which(command): # checks if the file exists even outside my disk and the access status | shutil.which(cat)
-                    print(f'{command} is {shutil.which(command)}')
-
-                else:
-                    print(f'{command}: not found')
+            result = run_builtins(command)
+            print(result)
 
 
         elif command.startswith('complete'):
-            parts = command.split()
-        
-            flag = parts[1]
-
-            if flag == '-p':
-                cmd = parts[2]
-
-                if cmd in completers:
-                    print(f"complete -C '{completers[cmd]}' {cmd}")
-                else:
-                    print(f'complete: {cmd}: no completion specification')
+            result = run_builtins(command)
+            print(result)
             
-            elif flag == '-C':
-                path = parts[2]
-                cmd = parts[3]
-
-                completers[cmd] = path
-            
-            elif flag == '-r':
-                if cmd in completers:
-                    del completers[cmd]
-                else:
-                    print(f'complete: {cmd}: no completion specification')
-
-                
         elif command == 'jobs':
-            for i in range(len(jobs)):
-                if jobs[i] == None:
-                    continue
-
-                process, original = jobs[i]
-
-                status = 'Running' if process.poll() is None else 'Done'
-                suffix = ' &' if process.poll() is None else ''
-
-                not_none_indices = [i for i in range(len(jobs)) if jobs[i] is not None]
-                
-                if i == not_none_indices[-1]:      # highest job number
-                    marker = '+'
-                elif i == not_none_indices[-2]:    # second highest job number
-                    marker = '-'
-                else:
-                    marker = ' '
-            
-                print(f'[{i+1}]{marker}  {status:<24}{original}{suffix}')
-            
-            
-            for i in range(len(jobs)):
-                if jobs[i] == None:
-                    continue
-                
-                process, original = jobs[i]
-                
-                if process.poll() is not None:
-                    jobs[i] = None
+            result = run_builtins(command)
+            print(result)
 
 
         elif command.endswith('&'):
@@ -323,6 +394,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
