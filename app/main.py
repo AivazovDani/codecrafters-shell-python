@@ -166,6 +166,23 @@ def main():
             with open(file.strip(), 'w') as f:
                 subprocess.run(command_parts, stdout=f)
 
+        elif '|' in command:
+            parts = command.split('|')
+
+            for i in range(len(parts)):
+
+                if i == 0:
+                    result = subprocess.run(shlex.split(parts[i].strip()), stdout=subprocess.PIPE)
+                
+                elif (len(parts) - 1) == i:
+                    subprocess.run(shlex.split(parts[i].strip()))
+                
+                else:
+                    result = subprocess.run(shlex.split(parts[i].strip()), stdin=result.stdout)
+
+
+
+
         elif command.startswith('pwd'):
 
             print(os.getcwd()) # get the absolute path of the current directory to standout
