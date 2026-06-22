@@ -96,7 +96,7 @@ def run_builtins(command):
 
     if command.split()[0] in builtins:
                         
-        if command == 'echo':
+        if command.startswith('echo'):
             parts = shlex.split(command)
             return " ".join(parts[1:])
 
@@ -104,7 +104,7 @@ def run_builtins(command):
 
             return 'exit'
         
-        elif command == 'cd':
+        elif command.startswith('cd'):
             parts = command.split()
             cmd = parts[0]
             absolute_path = parts[1]
@@ -118,7 +118,7 @@ def run_builtins(command):
             else:
                 return f'cd: {absolute_path}: No such file or directory'
 
-        elif command == 'type':
+        elif command.startswith('type'):
             command = command.replace('type ','')
 
 
@@ -134,11 +134,11 @@ def run_builtins(command):
                     return f'{command}: not found'
 
 
-        elif command == 'pwd':
+        elif command.startswith('pwd'):
             
             return os.getcwd() # get the absolute path of the current directory to standout
 
-        elif command == 'complete':
+        elif command.startswith('complete'):
             parts = command.split()
         
             flag = parts[1]
