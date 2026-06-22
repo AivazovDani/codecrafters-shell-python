@@ -285,11 +285,10 @@ def main():
 
             if first_command.split()[0] in builtins:
                 result = run_builtins(first_command)
-                print(f"DEBUG first_command={first_command!r}", file=sys.stderr)
-                print(f"DEBUG result={result!r}", file=sys.stderr)
+                
                 
                 if result is not None:
-                    result = result.encode()
+                    result = result.encode() + b'\n'
 
                     for i in range(1, len(parts)):
 
