@@ -172,13 +172,13 @@ def main():
             for i in range(len(parts)):
 
                 if i == 0:
-                    result = subprocess.run(shlex.split(parts[i].strip()), input=subprocess.PIPE)
+                    result = subprocess.run(shlex.split(parts[i].strip()), stdout=subprocess.PIPE)
                 
                 elif (len(parts) - 1) == i:
                     subprocess.run(shlex.split(parts[i].strip()), input=result.stdout)
                 
                 else:
-                    result = subprocess.run(shlex.split(parts[i].strip()), input=result.stdout)
+                    result = subprocess.run(shlex.split(parts[i].strip()), input=result.stdout, stdout=subprocess.PIPE)
 
 
 
