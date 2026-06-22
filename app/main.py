@@ -295,12 +295,12 @@ def main():
 
                         if (len(parts) - 1) == i:
                             if isinstance(result, bytes):
-                                result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
-                                result.communicate(input=result)
+                                p = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
+                                p.communicate(input=result)
 
                             else:
-                                result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
-                                result.communicate(input=result)
+                                p = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
+                                p.communicate(input=result)
 
                         
                         else:
