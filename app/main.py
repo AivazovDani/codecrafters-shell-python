@@ -246,9 +246,7 @@ def main():
                 print(f'[{i+1}]{marker}  {'Done':<24}{original}')
                 jobs[i] = None
 
-        sys.stdout.write("$ ")
-        sys.stdout.flush()
-        command = input()
+        command = input("$ ")
         
 
         if command == 'exit':
