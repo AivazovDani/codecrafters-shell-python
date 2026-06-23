@@ -202,7 +202,7 @@ def run_builtins(command):
             return output
 
         elif command.startswith('history'):
-            written_commands = 0
+            
             parts = command.split()
 
             if len(parts) > 1 and parts[1] == '-r':
