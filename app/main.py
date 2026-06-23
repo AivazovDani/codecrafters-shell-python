@@ -158,10 +158,10 @@ def run_builtins(command):
                 completers[cmd] = path
             
             elif flag == '-r':
-                if command in completers:
-                    del completers[command]
+                if cmd in completers:
+                    del completers[cmd]
                 else:
-                    return f'complete: {command}: no completion specification'
+                    return f'complete: {cmd}: no completion specification'
 
         elif command == 'jobs':
             not_none_indices = [i for i in range(len(jobs)) if jobs[i] is not None]
