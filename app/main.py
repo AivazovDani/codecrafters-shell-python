@@ -458,7 +458,7 @@ def main():
             else:
                 print(f'{cmd}: command not found')
 
-    readline.write_history_file(histfile)
+    readline.write_history_file(HISTFILE)
 
 
 
