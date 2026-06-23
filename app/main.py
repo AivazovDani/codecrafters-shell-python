@@ -228,9 +228,9 @@ def run_builtins(command):
                 
                 with open(path, 'a') as f:
                     current_length = readline.get_current_history_length()
-                        for i in range(written_commands + 1, current_length + 1):
-                            f.write(readline.get_history_item(i) + '\n')
-                        written_commands = current_length
+                    for i in range(written_commands + 1, current_length + 1):
+                        f.write(readline.get_history_item(i) + '\n')
+                    written_commands = current_length
             else:
 
                 command = parts[0]
