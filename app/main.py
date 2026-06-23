@@ -13,7 +13,9 @@ builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs', 'history']
 
 # Background Jobs List
 jobs = []
-written_commands = 0
+written_commands = 0 # we declare it once at the start / refresh of the shell
+
+
 
 def completer(text, state): # built in eadline but overriding it to fit my case
 
@@ -93,7 +95,7 @@ readline.set_completion_display_matches_hook(display_matches) # runs when there 
 readline.set_auto_history(True) # It tells readline to automatically add every command typed with input() to the history.
 
 def run_builtins(command):
-    global written_commands
+    global written_commands # remembers every built in command from the current session
 
 
     if command.split()[0] in builtins:
@@ -225,9 +227,9 @@ def run_builtins(command):
             elif len(parts) > 1 and parts[1] == '-a':
                 
                 path = parts[2]
-                current_length = readline.get_current_history_length()
+                current_length = readline.get_current_history_length() # update the written_command to the current lenght of the all commands in history (current session)
                 readline.append_history_file(current_length - written_commands, path)
-                written_commands = current_length
+                written_commands = current_length # update the global variable
 
             else:
 
@@ -251,6 +253,12 @@ def run_builtins(command):
 
                 
 def main():
+    # Sets the history file path 
+    histfile = os.path.expanduser("~/.shell_history")
+
+    if os.path.exists(histfile):
+        readline.read_history_file(histfile)
+
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
     while True:
         
