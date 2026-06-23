@@ -164,7 +164,7 @@ def run_builtins(command):
                     return f'complete: {cmd}: no completion specification'
 
         elif command == 'jobs':
-            not_one_indices = [i for i in range(len(jobs)) if jobs[i] is not None]
+            not_none_indices = [i for i in range(len(jobs)) if jobs[i] is not None]
 
             output = ""
 
