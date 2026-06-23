@@ -317,8 +317,13 @@ def main():
                         result = subprocess.Popen(shlex.split(parts[i].strip()), stdout=subprocess.PIPE)
                     
                     elif (len(parts) - 1) == i:
-                        result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout)
-                        result.communicate()
+                        if parts[i].split()[0] not in builtins:
+                            result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout)
+                            result.communicate()
+                        else:
+                            command = parts[i].strip()
+                            print(run_builtins(command))
+
                     
                     else:
                         result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout, stdout=subprocess.PIPE)
