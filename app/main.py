@@ -387,8 +387,8 @@ def main():
             print(result, end='')
 
         elif command.startswith('history'):
-            result = run_builtins(command) if result != None else ''
-            print(result, end='')
+            result = run_builtins(command)
+            print(result, end='') if result != None else ''
 
         # Run tasks in the background
         elif command.endswith('&'):
