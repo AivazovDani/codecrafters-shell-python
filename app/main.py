@@ -354,7 +354,7 @@ def main():
             
         elif command == 'jobs':
             result = run_builtins(command)
-            print(result)
+            print(result, end='')
 
 
         elif command.endswith('&'):
