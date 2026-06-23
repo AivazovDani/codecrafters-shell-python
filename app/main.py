@@ -210,7 +210,7 @@ def run_builtins(command):
             output = ""
 
             if number is not None:
-                for i in range(lenght - number + 1, lenght):
+                for i in range(lenght - number + 1, lenght + 1):
                     output += f'{i:>4}  {readline.get_history_item(i)}\n'
 
             else:
