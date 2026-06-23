@@ -205,7 +205,7 @@ def run_builtins(command):
             output = ""
 
             for i in range(1, lenght + 1):
-                output += f'{i:>4}  {readline.get_history_item(i)})'
+                output += f'{i:>4}  {readline.get_history_item(i)}\n'
 
             return output
 
@@ -370,7 +370,7 @@ def main():
             print(result, end='')
 
         elif command == 'history':
-            register = run_builtins(command)
+            result = run_builtins(command)
             print(result)
 
         # Run tasks in the background
