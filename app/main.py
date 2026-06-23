@@ -458,6 +458,8 @@ def main():
             else:
                 print(f'{cmd}: command not found')
 
+    readline.write_history_file(histfile)
+
 
 
 if __name__ == "__main__":
