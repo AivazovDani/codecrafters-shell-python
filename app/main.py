@@ -371,7 +371,7 @@ def main():
 
         elif command == 'history':
             result = run_builtins(command)
-            print(result)
+            print(result, end='')
 
         # Run tasks in the background
         elif command.endswith('&'):
