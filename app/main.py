@@ -387,7 +387,7 @@ def main():
             print(result, end='')
 
         elif command.startswith('history'):
-            result = run_builtins(command)
+            result = run_builtins(command) if result != None else ''
             print(result, end='')
 
         # Run tasks in the background
