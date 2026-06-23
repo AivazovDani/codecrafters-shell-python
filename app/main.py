@@ -247,6 +247,7 @@ def main():
                 jobs[i] = None
 
         sys.stdout.write("$ ")
+        sys.stdout.flush()
         command = input()
         
 
