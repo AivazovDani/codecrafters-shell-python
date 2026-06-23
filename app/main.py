@@ -350,7 +350,7 @@ def main():
 
         elif command.startswith('complete'):
             result = run_builtins(command)
-            print(result)
+            print(result) if result != None else ''
             
         elif command == 'jobs':
             result = run_builtins(command)
