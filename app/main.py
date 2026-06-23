@@ -93,6 +93,7 @@ readline.set_completion_display_matches_hook(display_matches) # runs when there 
 readline.set_auto_history(True) # It tells readline to automatically add every command typed with input() to the history.
 
 def run_builtins(command):
+    global written_commands
 
     if command.split()[0] in builtins:
                         
@@ -201,7 +202,9 @@ def run_builtins(command):
             return output
 
         elif command.startswith('history'):
+            written_commands = 0
             parts = command.split()
+
             if len(parts) > 1 and parts[1] == '-r':
                 path = parts[2]
 
@@ -213,26 +216,21 @@ def run_builtins(command):
             elif len(parts) > 1 and parts[1] == '-w':
                 path = parts[2]
 
-                with open(path, 'w') as f:
-                    for i in range(1, readline.get_current_history_length() + 1):
-                        f.write(readline.get_history_item(i) + '\n')  
+                if os.path.exists(path):
+                    with open(path, 'w') as f:
+                        for i in range(1, readline.get_current_history_length() + 1):
+                            f.write(readline.get_history_item(i) + '\n')
+                            written_commands += 1
+
 
             elif len(parts) > 1 and parts[1] == '-a':
                 path = parts[2]
-
-                with open(path, 'r') as f:
-                    existing = [line for line in f.read().splitlines() if line.strip()]
-
-                with open(path, 'w') as f:  # rewrite without empty lines first
-                    for line in existing:
-                        f.write(line + '\n')
-                            
-
+                
                 with open(path, 'a') as f:
-                    for i in range(1, readline.get_current_history_length() + 1):
-                        if readline.get_history_item(i) not in existing:
+                    current_length = readline.get_current_history_length()
+                        for i in range(written_commands + 1, current_length + 1):
                             f.write(readline.get_history_item(i) + '\n')
-
+                        written_commands = current_length
             else:
 
                 command = parts[0]
