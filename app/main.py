@@ -215,7 +215,17 @@ def run_builtins(command):
 
                 with open(path, 'w') as f:
                     for i in range(1, readline.get_current_history_length() + 1):
-                        f.write(readline.get_history_item(i) + '\n')                    
+                        f.write(readline.get_history_item(i) + '\n')  
+
+            elif len(parts) > 1 and parts[1] == '-a':
+                path = parts[2]
+
+                with open(path, 'r') as f:
+                    existing = f.read().splitlines()
+                
+                if command not in existing:
+                    with open(path, 'a') as f:
+                        f.write(command + '\n')
 
             else:
 
