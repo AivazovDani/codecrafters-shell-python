@@ -225,7 +225,7 @@ def run_builtins(command):
                 
                 if command not in existing:
                     with open(path, 'a') as f:
-                        f.write(command + '\n')
+                        f.write(readline.get_history_item(command) + '\n')  
 
             else:
 
