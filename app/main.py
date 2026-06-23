@@ -90,7 +90,7 @@ def display_matches(substitution, options, longest_match_len): # this is build i
 readline.set_completer(completer) # register your tab completion function
 readline.parse_and_bind("tab: complete") # bind tab key to completion
 readline.set_completion_display_matches_hook(display_matches) # runs when there are more than one match to show
-
+readline.set_auto_history(True)
 
 def run_builtins(command):
 
@@ -247,8 +247,7 @@ def main():
                 jobs[i] = None
 
         sys.stdout.write("$ ")
-        sys.stdout.flush()
-        command = sys.stdin.readline().rstrip('\n')
+        command = input()
         
 
         if command == 'exit':
