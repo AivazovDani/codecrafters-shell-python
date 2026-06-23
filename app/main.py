@@ -200,6 +200,15 @@ def run_builtins(command):
             
             return output
 
+        elif command == 'history':
+            lenght = readline.get_current_history_length()
+            output = ""
+
+            for i in range(1, lenght + 1):
+                output += readline.get_history_item(i) + '\n'
+
+            return output
+
                 
 
                 
