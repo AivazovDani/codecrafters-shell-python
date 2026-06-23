@@ -200,12 +200,22 @@ def run_builtins(command):
             
             return output
 
-        elif command == 'history':
+        elif command.startswith('history'):
+            parts = command.split()
+
+            command = parts[0]
+            number = int(parts[1]) if len(parts) > 1 else None
+
             lenght = readline.get_current_history_length()
             output = ""
 
-            for i in range(1, lenght + 1):
-                output += f'{i:>4}  {readline.get_history_item(i)}\n'
+            if number is not None:
+                for i in range(lenght - number, lenght + 1):
+                    output += f'{i:>4}  {readline.get_history_item(i)}\n'
+
+            else:
+                for i in range(1, lenght + 1):
+                    output += f'{i:>4}  {readline.get_history_item(i)}\n'
 
             return output
 
