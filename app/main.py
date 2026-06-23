@@ -254,12 +254,12 @@ def run_builtins(command):
                 
 def main():
     # Sets the history file path 
-    HISTFILE = os.environ.get("HISTFILE") or os.path.expanduser("~/.shell_history")
+    HISTFILE = os.environ.get("HISTFILE") or os.path.expanduser("~/.shell_history") # if HISTFILE doesn't exist set it to ~/.shell_history
 
     try:
         readline.read_history_file(HISTFILE)
     except (OSError, FileNotFoundError):
-        pass  # file doesn't exist yet, that's fine
+        pass  # file doesn't exist yet that's fine
 
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
     while True:
