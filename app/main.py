@@ -13,7 +13,7 @@ builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs', 'history']
 
 # Background Jobs List
 jobs = []
-
+written_commands = 0
 
 def completer(text, state): # built in eadline but overriding it to fit my case
 
@@ -95,7 +95,6 @@ readline.set_auto_history(True) # It tells readline to automatically add every c
 def run_builtins(command):
     global written_commands
 
-    written_commands = 0
 
     if command.split()[0] in builtins:
                         
