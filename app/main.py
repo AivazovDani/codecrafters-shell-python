@@ -292,9 +292,12 @@ def main():
 
                     for i in range(1, len(parts)):
 
-                        if (len(parts) - 1) == i:
+                        if (len(parts) - 1) == i and parts[i].split()[0] not in builtins:
                             p = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
                             p.communicate(input=result)
+                        else:
+                            command = parts[i].strip()
+                            print(run_builtins(command))
 
                         
                         else:
