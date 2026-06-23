@@ -369,6 +369,10 @@ def main():
             result = run_builtins(command)
             print(result, end='')
 
+        elif command == 'history':
+            register = run_builtins(command)
+            print(result)
+
         # Run tasks in the background
         elif command.endswith('&'):
             command = command.rstrip('&').strip()
