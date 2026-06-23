@@ -202,7 +202,7 @@ def run_builtins(command):
 
         elif command.startswith('history'):
             parts = command.split()
-            if parts[1] == '-r':
+            if len(parts) > 1 and parts[1] == '-r':
                 path = parts[2]
 
                 if os.path.exists(path):
