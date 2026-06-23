@@ -9,7 +9,7 @@ import readline # library that adds arrow keys up down like a real shell and rem
 completers = {}
 
 # Handeling TAB completion for build in commands and PATH executables | HARD
-builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs']
+builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs', 'history']
 
 # Background Jobs List
 jobs = []
@@ -206,7 +206,8 @@ def run_builtins(command):
 def main():
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
     while True:
-
+        
+        # Check for running jobs before the shell starts
         for i in range(len(jobs)):
             if jobs[i] == None:
                 continue
@@ -280,6 +281,7 @@ def main():
             with open(file.strip(), 'w') as f:
                 subprocess.run(command_parts, stdout=f)
 
+        # Pipelines
         elif '|' in command:
             parts = command.split('|')
 
@@ -358,7 +360,7 @@ def main():
             result = run_builtins(command)
             print(result, end='')
 
-
+        # Run tasks in the background
         elif command.endswith('&'):
             command = command.rstrip('&').strip()
             parts = shlex.split(command)
