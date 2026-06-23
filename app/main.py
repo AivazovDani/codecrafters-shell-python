@@ -247,7 +247,8 @@ def main():
                 jobs[i] = None
 
         sys.stdout.write("$ ")
-        command = input()
+        sys.stdout.flush()
+        command = input('$ ')
         
 
         if command == 'exit':
