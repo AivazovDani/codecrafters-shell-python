@@ -205,7 +205,7 @@ def run_builtins(command):
             output = ""
 
             for i in range(1, lenght + 1):
-                output += readline.get_history_item(i) + '\n'
+                output += f'{i:>4}  readline.get_history_item(i))'
 
             return output
 
