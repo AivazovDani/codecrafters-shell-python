@@ -379,7 +379,7 @@ def main():
             result = run_builtins(command)
             print(result, end='')
 
-        elif command == 'history':
+        elif command.startswith('history'):
             result = run_builtins(command)
             print(result, end='')
 
