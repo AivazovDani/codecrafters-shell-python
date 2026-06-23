@@ -93,7 +93,7 @@ readline.set_completion_display_matches_hook(display_matches) # runs when there 
 readline.set_auto_history(True) # It tells readline to automatically add every command typed with input() to the history.
 
 def run_builtins(command):
-    global written_commands
+    
 
     if command.split()[0] in builtins:
                         
@@ -224,13 +224,12 @@ def run_builtins(command):
 
 
             elif len(parts) > 1 and parts[1] == '-a':
+                global written_commands
                 path = parts[2]
-                
-                with open(path, 'a') as f:
-                    current_length = readline.get_current_history_length()
-                    for i in range(written_commands + 1, current_length + 1):
-                        f.write(readline.get_history_item(i) + '\n')
-                    written_commands = current_length
+                current_length = readline.get_current_history_length()
+                readline.append_history_file(current_length - written_commands, path)
+                written_commands = current_length
+
             else:
 
                 command = parts[0]
