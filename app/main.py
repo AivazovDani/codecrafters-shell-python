@@ -158,6 +158,8 @@ def run_builtins(command):
                 completers[cmd] = path
             
             elif flag == '-r':
+                cmd = parts[2]
+
                 if cmd in completers:
                     del completers[cmd]
                 else:
