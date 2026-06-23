@@ -220,7 +220,6 @@ def run_builtins(command):
                     with open(path, 'w') as f:
                         for i in range(1, readline.get_current_history_length() + 1):
                             f.write(readline.get_history_item(i) + '\n')
-                            written_commands += 1
 
 
             elif len(parts) > 1 and parts[1] == '-a':
