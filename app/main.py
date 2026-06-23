@@ -228,6 +228,7 @@ def run_builtins(command):
                     for i in range(1, readline.get_current_history_length() + 1):
                         if readline.get_history_item(i) not in existing:
                             f.write(readline.get_history_item(i) + '\n')
+                        f.write('\n')
 
             else:
 
