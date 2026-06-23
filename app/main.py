@@ -256,7 +256,7 @@ def main():
     # Sets the history file path 
     HISTFILE = os.environ.get("HISTFILE")
 
-    if HISTFILE is not None and os.path.exists(HISTFILE):
+    if HISTFILE is not None:
         readline.read_history_file(HISTFILE)
 
     # REPL (read the command, parse and evaluate (execute) it, display the output, return to step 1)
