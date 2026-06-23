@@ -283,9 +283,6 @@ def main():
 
             first_command = parts[0]
 
-            print(f"DEBUG first_command={first_command.split()[0]!r}", file=sys.stderr)
-            print(f"DEBUG in builtins={first_command.split()[0] in builtins}", file=sys.stderr)
-
             if first_command.split()[0] in builtins:
                 result = run_builtins(first_command)
                 
