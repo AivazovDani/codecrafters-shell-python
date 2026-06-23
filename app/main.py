@@ -283,6 +283,9 @@ def main():
 
             first_command = parts[0]
 
+            print(f"DEBUG first_command={first_command.split()[0]!r}", file=sys.stderr)
+            print(f"DEBUG in builtins={first_command.split()[0] in builtins}", file=sys.stderr)
+
             if first_command.split()[0] in builtins:
                 result = run_builtins(first_command)
                 
@@ -293,18 +296,14 @@ def main():
                     for i in range(1, len(parts)):
 
                         if (len(parts) - 1) == i:
-                            if isinstance(result, bytes):
-                                p = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
-                                p.communicate(input=result)
-
-                            else:
-                                p = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
-                                p.communicate(input=result)
+                            p = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
+                            p.communicate(input=result)
 
                         
                         else:
                             if isinstance(result, bytes):
-                                result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout, stdout=subprocess.PIPE)
+                                p = subprocess.Popen(shlex.split(parts[i].strip()), stdin=subprocess.PIPE)
+                                p.communicate(input=result)
                             else:
                                 result = subprocess.Popen(shlex.split(parts[i].strip()), stdin=result.stdout, stdout=subprocess.PIPE)
 
