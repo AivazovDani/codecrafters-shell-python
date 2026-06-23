@@ -248,7 +248,7 @@ def main():
 
         sys.stdout.write("$ ")
         sys.stdout.flush()
-        command = input()
+        command = sys.stdin.readline().rstrip('\n')
         
 
         if command == 'exit':
