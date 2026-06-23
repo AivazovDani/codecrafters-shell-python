@@ -221,7 +221,7 @@ def run_builtins(command):
                 path = parts[2]
 
                 with open(path, 'r') as f:
-                    existing = f.read().splitlines()
+                    existing = [line for line in f.read().splitlines() if line.strip()]
                 
 
                 with open(path, 'a') as f:
