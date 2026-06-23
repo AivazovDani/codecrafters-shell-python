@@ -90,7 +90,7 @@ def display_matches(substitution, options, longest_match_len): # this is build i
 readline.set_completer(completer) # register your tab completion function
 readline.parse_and_bind("tab: complete") # bind tab key to completion
 readline.set_completion_display_matches_hook(display_matches) # runs when there are more than one match to show
-readline.set_auto_history(True)
+readline.set_auto_history(True) # It tells readline to automatically add every command typed with input() to the history.
 
 def run_builtins(command):
 
@@ -202,22 +202,30 @@ def run_builtins(command):
 
         elif command.startswith('history'):
             parts = command.split()
+            if parts[1] == '-r':
+                path = parts[2]
 
-            command = parts[0]
-            number = int(parts[1]) if len(parts) > 1 else None
-
-            lenght = readline.get_current_history_length()
-            output = ""
-
-            if number is not None:
-                for i in range(lenght - number + 1, lenght + 1):
-                    output += f'{i:>4}  {readline.get_history_item(i)}\n'
-
+                if os.path.exists(path):
+                    with open(path, 'r') as f:
+                        for line in f:
+                            readline.add_history(line.strip())
             else:
-                for i in range(1, lenght + 1):
-                    output += f'{i:>4}  {readline.get_history_item(i)}\n'
 
-            return output
+                command = parts[0]
+                number = int(parts[1]) if len(parts) > 1 else None
+
+                lenght = readline.get_current_history_length()
+                output = ""
+
+                if number is not None:
+                    for i in range(lenght - number + 1, lenght + 1):
+                        output += f'{i:>4}  {readline.get_history_item(i)}\n'
+
+                else:
+                    for i in range(1, lenght + 1):
+                        output += f'{i:>4}  {readline.get_history_item(i)}\n'
+
+                return output
 
                 
 
