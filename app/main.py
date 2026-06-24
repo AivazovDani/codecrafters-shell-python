@@ -258,7 +258,7 @@ def run_builtins(command):
 
                 declares[variables[0]] = variables[1]
 
-            if parts[1] == '-p':
+            elif parts[1] == '-p':
                 if parts[2] not in declares.keys:
                     return f'declare: {parts[2]}: not found'
                 else:
