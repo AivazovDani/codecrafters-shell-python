@@ -256,11 +256,14 @@ def run_builtins(command):
             if len(parts) == 2:
                 variables = parts[1].split('=')
 
-                declares[variables[0]] = variables[1]
+                variable_name = variables[0]
+                variable_value = variables[1]
+
+                declares[variable_name] = variable_value
 
             elif parts[1] == '-p':
                 variable_name = parts[2]
-                
+
                 if variable_name not in declares.keys:
                     return f'declare: {parts[2]}: not found'
                 else:
