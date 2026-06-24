@@ -320,7 +320,9 @@ def main():
         for name, value in declares.items():
             command = command.replace(f'${{{name}}}', value)
             command = command.replace(f'${name}', value)
-        
+            
+        command = re.sub(r'\$\{?\w+\}?', '', command)  # remove any remaining $vars
+
 
         if command == 'exit':
             
