@@ -249,6 +249,12 @@ def run_builtins(command):
 
                 return output
 
+        elif command.startswith('declare'):
+            parts = command.split()
+
+            if parts[1] == '-p':
+                print(f'declare: {parts[2]}: not found')
+
                 
 
                 
