@@ -253,7 +253,7 @@ def run_builtins(command):
             parts = command.split()
 
             if parts[1] == '-p':
-                print(f'declare: {parts[2]}: not found')
+                return f'declare: {parts[2]}: not found'
 
                 
 
@@ -425,6 +425,10 @@ def main():
         elif command.startswith('history'):
             result = run_builtins(command)
             print(result, end='') if result != None else ''
+
+        elif command.startswith('declare'):
+            result = run_builtins(command)
+            print(result)
 
         # Run tasks in the background
         elif command.endswith('&'):
