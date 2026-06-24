@@ -262,7 +262,7 @@ def run_builtins(command):
                 if re.match(pattern, variables[0]):
                     vavariable_name = variables[0]
                 else:
-                    return f'declare: {variables[0]}': not a valid identifier'
+                    return f'declare: {variables[0]}: not a valid identifier'
 
                 variable_value = variables[1]
 
