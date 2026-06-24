@@ -316,7 +316,9 @@ def main():
 
         command = input("$ ")
 
+        # Replace variable name with the real value
         for name, value in declares.items():
+            command = command.replace(f'${{{name}}}', value)
             command = command.replace(f'${name}', value)
         
 
