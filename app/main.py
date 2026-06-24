@@ -276,6 +276,8 @@ def run_builtins(command):
                     return f'declare: {parts[2]}: not found'
                 else:
                     return f'declare -- {parts[2]}="{declares[parts[2]]}"'
+        
+
 
                 
 
@@ -313,6 +315,9 @@ def main():
                 jobs[i] = None
 
         command = input("$ ")
+
+        for name, value in declares.items():
+            command = command.replace(f'${name}', value)
         
 
         if command == 'exit':
