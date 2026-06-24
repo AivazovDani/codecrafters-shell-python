@@ -261,12 +261,13 @@ def run_builtins(command):
 
                 if re.match(pattern, variables[0]):
                     vavariable_name = variables[0]
+
+                    variable_value = variables[1]
+
+                    declares[variable_name] = variable_value
+
                 else:
                     return f'declare: {variables[0]}: not a valid identifier'
-
-                variable_value = variables[1]
-
-                declares[variable_name] = variable_value
 
             elif parts[1] == '-p':
                 variable_name = parts[2]
