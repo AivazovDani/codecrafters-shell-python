@@ -9,7 +9,7 @@ import readline # library that adds arrow keys up down like a real shell and rem
 completers = {}
 
 # Handeling TAB completion for build in commands and PATH executables | HARD
-builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs', 'history']
+builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs', 'history', 'declare']
 
 # Background Jobs List
 jobs = []
@@ -254,10 +254,10 @@ def run_builtins(command):
                 
 def main():
     # Sets the history file path 
-    HISTFILE = os.environ.get("HISTFILE") or os.path.expanduser("~/.shell_history") # if HISTFILE doesn't exist set it to ~/.shell_history
+    HISTFILE = os.environ.get("HISTFILE") or os.path.expanduser("~/.shell_history") # if HISTFILE doesn't exist set it to home directory/.shell_history
 
     try:
-        readline.read_history_file(HISTFILE)
+        readline.read_history_file(HISTFILE) # tries to load previous sessions history commands so i can use the arrow up key
     except (OSError, FileNotFoundError):
         pass  # file doesn't exist yet that's fine
 
@@ -460,7 +460,7 @@ def main():
             else:
                 print(f'{cmd}: command not found')
 
-    readline.write_history_file(HISTFILE)
+    readline.write_history_file(HISTFILE) # write commands from the previous history file to HISTFILE
 
 
 
