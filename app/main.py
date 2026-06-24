@@ -5,6 +5,8 @@ import subprocess
 import shlex # splitting '', "", /, _ and spaces. Everything
 import readline # library that adds arrow keys up down like a real shell and remembers history of commands
 
+import re
+
 # Programmic Completions
 completers = {}
 
@@ -255,8 +257,13 @@ def run_builtins(command):
 
             if len(parts) == 2:
                 variables = parts[1].split('=')
+                pattern = r'^[a-zA-Z_][a-zA-Z0-9_]*$'
 
-                variable_name = variables[0]
+                if re.match(pattern, variables[0]):
+                    vavariable_name = variables[0]
+                else:
+                    return f'declare: {variables[0]}': not a valid identifier'
+
                 variable_value = variables[1]
 
                 declares[variable_name] = variable_value
