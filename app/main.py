@@ -15,7 +15,8 @@ builtins = ['echo', 'exit', 'type', 'cd', 'pwd', 'complete', 'jobs', 'history', 
 jobs = []
 written_commands = 0 # we declare it once at the start / refresh of the shell
 
-
+# Declaire Variables
+declares = {}
 
 def completer(text, state): # built in eadline but overriding it to fit my case
 
@@ -252,8 +253,16 @@ def run_builtins(command):
         elif command.startswith('declare'):
             parts = command.split()
 
+            if len(parts) == 2:
+                variables = parts[1].split('=')
+
+                declares[variables[0]] = variables[1]
+
             if parts[1] == '-p':
-                return f'declare: {parts[2]}: not found'
+                if parts[2] not in declares.keys:
+                    return f'declare: {parts[2]}: not found'
+                else:
+                    return f'declare -- {parts[2]}="{declares[parts[2]]}"'
 
                 
 
