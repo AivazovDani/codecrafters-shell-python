@@ -267,7 +267,7 @@ def run_builtins(command):
                     declares[variable_name] = variable_value
 
                 else:
-                    return f'declare: {variables[0]}: not a valid identifier'
+                    return f"declare: '{parts[1]}': not a valid identifier|
 
             elif parts[1] == '-p':
                 variable_name = parts[2]
