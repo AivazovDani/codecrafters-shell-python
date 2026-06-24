@@ -260,7 +260,7 @@ def run_builtins(command):
                 pattern = r'^[a-zA-Z_][a-zA-Z0-9_]*$'
 
                 if re.match(pattern, variables[0]):
-                    vavariable_name = variables[0]
+                    variable_name = variables[0]
 
                     variable_value = variables[1]
 
