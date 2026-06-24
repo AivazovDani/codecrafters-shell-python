@@ -437,7 +437,7 @@ def main():
 
         elif command.startswith('declare'):
             result = run_builtins(command)
-            print(result)
+            print(result) if result != None else ''
 
         # Run tasks in the background
         elif command.endswith('&'):
